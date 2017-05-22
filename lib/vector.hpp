@@ -3,9 +3,11 @@
 
 template <typename T>
 class vector {
+	using size_type = unsigned int;
+	
 	T *ptr;
-	unsigned int _size;
-	unsigned int _capacity;
+	size_type _size;
+	size_type _capacity;
 
 	typedef T* iterator;
 
@@ -14,7 +16,7 @@ class vector {
 			ptr = new T[_capacity];
 		}
 
-		vector (unsigned int size): ptr(nullptr), _size(size), _capacity(32) {
+		vector (size_type size): ptr(nullptr), _size(size), _capacity(32) {
 			ptr = new T[_capacity];
 			resize(_size);
 		}
@@ -23,11 +25,11 @@ class vector {
 			delete[] ptr;
 		}
 
-		unsigned int size () {
+		size_type size () {
 			return _size;
 		}
 
-		unsigned int capacity () {
+		size_type capacity () {
 			return _capacity;
 		}
 
@@ -39,7 +41,7 @@ class vector {
 			//resize(_capacity);
 		}
 
-		void resize (unsigned int newSize) {
+		void resize (size_type newSize) {
 			if (newSize <= 32)
 				return;
 
@@ -65,7 +67,7 @@ class vector {
 
 			T *temp = new T[_capacity];
 
-			for (unsigned int i = 0; i < _size; i++)
+			for (size_type i = 0; i < _size; i++)
 				temp[i] = ptr[i];
 
 			delete[] ptr;
@@ -107,17 +109,17 @@ class vector {
 			_capacity = newVector.capacity();
 			ptr = new T[_capacity];
 
-			for (unsigned int i = 0; i < _size; i++)
+			for (size_type i = 0; i < _size; i++)
 				ptr[i] = newVector[i];
 
 			return *this;
 		}
 
-		T &operator[] (unsigned int i) {
+		T &operator[] (size_type i) {
 			return ptr[i];
 		}
 
-		//T operator[] (unsigned int i) const {
+		//T operator[] (size_type i) const {
 		//	return ptr[i];
 		//}
 };
