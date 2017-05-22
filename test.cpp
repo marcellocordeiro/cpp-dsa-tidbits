@@ -1,26 +1,33 @@
 #include <iostream>
 #include <string>
-
+/*
 #include "lib/algorithm.hpp"
 #include "lib/functional.hpp"
 #include "lib/utility.hpp"
 #include "lib/vector.hpp"
-#include "lib/bst.hpp"
+#include "lib/bst.hpp"*/
 #include "lib/list_stack_queue.hpp"
-#include "lib/heap.hpp"
-#include "lib/graph.hpp"
+/*#include "lib/heap.hpp"
+#include "lib/graph.hpp"*/
 
 int main () {
-	list<int> l;
+	queue<int> l;
 	//list<int>::iterator it;
 	
 	for (int i = 0; i < 10; i++) {
-		l.push_back(i * 2);
+		l.push(i * 2);
 	}
 
-	for (auto &it : l) {
-		std::cout << it << ' ';
+	//for (auto &it : l) {
+	//	std::cout << it << ' ';
+	//}
+
+	while (l.size()) {
+		std::cout << l.top() << ' ';
+		l.pop();
 	}
+
+	std::cout << std::endl;
 
 	//std::cout << l;
 

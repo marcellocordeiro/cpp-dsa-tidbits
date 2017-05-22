@@ -16,11 +16,14 @@ namespace ll { // linked list
 
 template <typename T>
 class list {
-	ll::node<T> *head;
-	ll::node<T> *tail;
-	unsigned int _size;
+	protected:
+		typedef ll::node<T>* _iterator;
+		using size_type = unsigned int;
 
-	typedef ll::node<T>* _iterator;
+		ll::node<T> *head;
+		ll::node<T> *tail;
+		size_type _size;
+
 
 	private:
 		void erase (ll::node<T> *ptr) {
@@ -96,7 +99,7 @@ class list {
 			delete_list(head);
 		}
 
-		unsigned int size () {
+		size_type size () {
 			return _size;
 		}
 
@@ -148,7 +151,7 @@ class list {
 			erase(tail->next);
 		}
 
-		friend /*std::ostream&*/void operator<< (std::ostream &os, list<T> &l) {
+		friend std::ostream& operator<< (std::ostream &os, list<T> &l) {
 			for (auto it = l.head->next; it != nullptr; it = it->next) {
 				if (it->prev == l.head)
 					os << "(prev: S) ";
@@ -165,7 +168,7 @@ class list {
 				os << std::endl;				
 			}
 
-			//return os;
+			return os;
 		}
 
 		/*
@@ -173,64 +176,45 @@ class list {
 		 *  search by value
 		 *  search by pos
 		 */
-
-		//class iterator {
-
-		//};
-
-
 };
 
 template <typename T>
-class stack {
-	list<T> l;
-
+class stack: private list<T> {
 	public:
-		stack () {}
-
-		~stack () {}
-
 		T top () {
-			return l.front();
+			return list<T>::front();
 		}
 
-		unsigned int size () {
-			return l.size();
+		typename list<T>::size_type size () {
+			return list<T>::_size;
 		}
 
 		void push (T value) {
-			l.push_front(value);
+			list<T>::push_front(value);
 		}
 
-
 		void pop () {
-			l.pop_front();
+			list<T>::pop_front();
 		}
 };
 
 template <typename T>
-class queue {
-	list<T> l;
-
+class queue: private list<T> {
 	public:
-		queue () {}
-
-		~queue () {}
-
 		T top () {
-			return l.front();
+			return list<T>::front();
 		}
 
-		unsigned int size () {
-			return l.size();
+		typename list<T>::size_type size () {
+			return list<T>::_size;
 		}
 
 		void push (T value) {
-			l.push_back(value);
+			list<T>::push_back(value);
 		}
 
 		void pop () {
-			l.pop_front();
+			list<T>::pop_front();
 		}
 };
 
