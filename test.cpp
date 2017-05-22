@@ -16,9 +16,9 @@ int main () {
 	for (int i = 0; i < 10; i++)
 		v.push_back(rand() % 30);
 
-	for (unsigned int i = 0; i < 10; i++)
+	/*for (unsigned int i = 0; i < 10; i++)
 		std::cout << v[i] << ' ';
-	std::cout << std::endl;
+	std::cout << std::endl;*/
 
 	/*a = v;
 
@@ -28,9 +28,12 @@ int main () {
 
 	//quick_sort(v);
 
-	for (unsigned int i = 0; i < 10; i++)
+	/*for (unsigned int i = 0; i < 10; i++)
 		std::cout << v[i] << ' ';
-	std::cout << std::endl;
+	std::cout << std::endl;*/
+
+	for (auto it = v.begin(); it != v.end(); it++)
+		std::cout << *it << ' ';
 
 	return 0;
 }

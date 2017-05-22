@@ -11,15 +11,10 @@ void swap (T &x, T &y) {
 	y = temp;
 }
 
-#ifndef __vector_hpp_included__ // ???
-#else
-template <typename T>
-void fill (vector<T> &v, unsigned int size, T value) {
-	v.clear();
-
-	for (unsigned int i = 0; i < size; i++)
-		v.push_back(value);
+template <typename T1, typename T2>
+void fill (T1 begin, T1 end, T2 value) {
+	for (T1 it = begin; it != end; it++)
+		*it = value;
 }
-#endif
 
 #endif

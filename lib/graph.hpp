@@ -69,8 +69,8 @@ class graph {
 
 // =========== DFS =========== //
 void graph::dfs () { // all vertices
-	vector<bool> P;
-	fill(P, _size, false);
+	vector<bool> P(_size);
+	fill(P.begin(), P.end(), false);
 
 	for (int s = 0; s < _size; s++)
 		if (P[s] == false)
@@ -78,8 +78,8 @@ void graph::dfs () { // all vertices
 }
 
 void graph::dfs (int s) { // s is the source
-	vector<bool> P;
-	fill(P, _size, false);
+	vector<bool> P(_size);
+	fill(P.begin(), P.end(), false);
 
 	dfs_visit(s, P);
 }
@@ -103,8 +103,8 @@ void graph::dfs_visit (int s, vector<bool> &P) {
 
 // =========== BFS =========== //
 void graph::bfs () {
-	vector<bool> P;
-	fill(P, _size, false);
+	vector<bool> P(_size);
+	fill(P.begin(), P.end(), false);
 
 	for (int s = 0; s < _size; s++)
 		if (P[s] == false)
@@ -112,8 +112,8 @@ void graph::bfs () {
 }
 
 void graph::bfs (int s) {
-	vector<bool> P;
-	fill(P, _size, false);
+	vector<bool> P(_size);
+	fill(P.begin(), P.end(), false);
 
 	bfs_visit(s, P);
 }
@@ -148,9 +148,9 @@ void graph::bfs_visit (int s, vector<bool> &P) {
 // =========================== //
 //pair<vector<int>, vector<int>> graph::dijkstra (int s) {
 void graph::dijkstra (int s) {
-	vector<int> D, F;
-	fill(D, _size, inf);
-	fill(F, _size, -1);
+	vector<int> D(_size), F(_size);
+	fill(D.begin(), D.end(), inf);
+	fill(F.begin(), F.end(), -1);
 	
 	D[0] = 0;
 

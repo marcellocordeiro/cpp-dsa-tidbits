@@ -7,9 +7,16 @@ class vector {
 	unsigned int _size;
 	unsigned int _capacity;
 
+	typedef T* iterator;
+
 	public:
 		vector (): ptr(nullptr), _size(0), _capacity(32) {
 			ptr = new T[_capacity];
+		}
+
+		vector (unsigned int size): ptr(nullptr), _size(size), _capacity(32) {
+			ptr = new T[_capacity];
+			resize(_size);
 		}
 
 		~vector () {
@@ -83,6 +90,14 @@ class vector {
 
 		T back () {
 			return ptr[_size - 1];
+		}
+
+		iterator begin () {
+			return ptr;
+		}
+
+		iterator end () {
+			return ptr + _size;
 		}
 
 		vector<T> &operator= (vector<T> &newVector) {
