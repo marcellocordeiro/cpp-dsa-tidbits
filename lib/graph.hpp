@@ -25,8 +25,6 @@ class graph {
 			return _size;
 		}
 
-		//void addEdge (pair<int, int> &edge) ?
-
 		void addEdge (pair<int, int> edge) {
 			G[edge.first].push_back({edge.second, 1});
 			G[edge.second].push_back({edge.first, 1}); // não dirigido
@@ -36,7 +34,6 @@ class graph {
 			G[edge.first].push_back({edge.second, weight});
 			G[edge.second].push_back({edge.first, weight}); // não dirigido
 		}
-
 
 		list<pair<int, int>> &operator[] (int i) {
 			return G[i];
@@ -50,16 +47,14 @@ class graph {
 		void bfs (int);
 		void bfs_visit (int, vector<bool>&);
 
-		//pair<vector<int>, vector<int>> dijkstra (int);
 		void dijkstra (int);
 
 		friend std::ostream& operator<< (std::ostream &os, graph &g) {
-			//return os << '(' << p.first << ", " << p.second << ')';
 			for (int i = 0; i < g.size(); i++) {
 				os << "===G[" << i << "]===" << std::endl;
 
-				for (auto it = g[i].begin(); it != g[i].end(); it = it->next)
-					os << (it->data.first) << ' ';
+				for (auto it : g[i])
+					os << it.first << ' ';
 				os << std::endl;
 			}
 
@@ -90,8 +85,8 @@ void graph::dfs_visit (int s, vector<bool> &P) {
 	// pre_visit(s);
 	std::cout << "visiting " << s << std::endl;
 
-	for (auto it = G[s].begin(); it != G[s].end(); it = it->next) {
-		int v = it->data.first;
+	for (auto it : G[s]) {
+		int v = it.first;
 
 		if (P[v] == false)
 			dfs_visit(v, P);
@@ -132,8 +127,8 @@ void graph::bfs_visit (int s, vector<bool> &P) {
 		// pre_visit(u);
 		std::cout << "visiting " << u << std::endl;
 
-		for (auto it = G[u].begin(); it != G[u].end(); it = it->next) { // list<T>::node não funciona (private) auto, sim (???)
-			int v = it->data.first;
+		for (auto it : G[u]) {
+			int v = it.first;
 
 			if (P[v] == false) {
 				q.push(v);
@@ -146,7 +141,7 @@ void graph::bfs_visit (int s, vector<bool> &P) {
 	}
 }
 // =========================== //
-//pair<vector<int>, vector<int>> graph::dijkstra (int s) {
+
 void graph::dijkstra (int s) {
 	vector<int> D(_size), F(_size);
 	fill(D.begin(), D.end(), inf);
@@ -162,12 +157,12 @@ void graph::dijkstra (int s) {
 		pair<int, int> du = h.extract(); // du.first = d, du.second = u
 		int u = du.second;
 
-		for (auto it = G[u].begin(); it != G[u].end(); it = it->next) {
-			if (D[u] + it->data.second < D[it->data.first]) {
-				D[it->data.first] = D[u] + it->data.second;
-				F[it->data.first] = u;
+		for (auto it : G[u]) {
+			if (D[u] + it.second < D[it.first]) {
+				D[it.first] = D[u] + it.second;
+				F[it.first] = u;
 
-				h.insert({D[it->data.first], it->data.first}); // update??
+				h.insert({D[it.first], it.first}); // update??
 			}
 		}
 	}
@@ -175,8 +170,6 @@ void graph::dijkstra (int s) {
 	for (unsigned int i = 0; i < D.size(); i++)
 		std::cout << D[i] << ' ';
 	std::cout << std::endl;
-
-	//return {D, F};
 }
 
 #endif

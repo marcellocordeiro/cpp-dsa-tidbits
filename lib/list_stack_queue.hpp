@@ -20,6 +20,8 @@ class list {
 	ll::node<T> *tail;
 	unsigned int _size;
 
+	typedef ll::node<T>* _iterator;
+
 	private:
 		void erase (ll::node<T> *ptr) {
 			ll::node<T> *temp = ptr;
@@ -55,6 +57,36 @@ class list {
 		}
 
 	public:
+		struct iterator {
+			_iterator ptr;
+
+			iterator () {}
+			iterator (_iterator it): ptr(it) {}
+
+			_iterator &operator= (_iterator rhs) {
+				ptr = rhs;
+				return ptr;
+			}
+
+			bool operator!= (iterator rhs) {
+				return !(ptr == rhs.ptr);
+			}
+
+			T &operator* () {
+				return ptr->data;
+			}
+
+			iterator &operator++ (int) {
+				ptr = ptr->next;
+				return *this;
+			}
+
+			iterator &operator++ () {
+				ptr = ptr->next;
+				return *this;
+			}
+		};
+
 		list (): _size(0) {
 			head = new ll::node<T>;
 			tail = head;
@@ -68,12 +100,12 @@ class list {
 			return _size;
 		}
 
-		ll::node<T> *begin () {
-			return head->next;
+		iterator begin () {
+			return iterator(head->next);
 		}
 
-		ll::node<T> *end () {
-			return nullptr;
+		iterator end () {
+			return iterator(nullptr);
 		}
 
 		T front () {
@@ -141,6 +173,12 @@ class list {
 		 *  search by value
 		 *  search by pos
 		 */
+
+		//class iterator {
+
+		//};
+
+
 };
 
 template <typename T>

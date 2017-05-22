@@ -11,10 +11,23 @@
 #include "lib/graph.hpp"
 
 int main () {
-	vector<int> v, a;
+	list<int> l;
+	//list<int>::iterator it;
+	
+	for (int i = 0; i < 10; i++) {
+		l.push_back(i * 2);
+	}
+
+	for (auto &it : l) {
+		std::cout << it << ' ';
+	}
+
+	//std::cout << l;
+
+	/*vector<int> v, a;
 
 	for (int i = 0; i < 10; i++)
-		v.push_back(rand() % 30);
+		v.push_back(rand() % 30);*/
 
 	/*for (unsigned int i = 0; i < 10; i++)
 		std::cout << v[i] << ' ';
@@ -32,8 +45,8 @@ int main () {
 		std::cout << v[i] << ' ';
 	std::cout << std::endl;*/
 
-	for (auto it = v.begin(); it != v.end(); it++)
-		std::cout << *it << ' ';
+	/*for (auto it = v.begin(); it != v.end(); it++)
+		std::cout << *it << ' ';*/
 
 	return 0;
 }
