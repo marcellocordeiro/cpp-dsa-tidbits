@@ -16,9 +16,14 @@ class vector {
 			ptr = new T[_capacity];
 		}
 
-		vector (size_type size): ptr(nullptr), _size(size), _capacity(32) {
+		vector (size_type n, T value): ptr(nullptr), _size(n), _capacity(32) {
+			while (n > _capacity)
+				_capacity *= 2;
+
 			ptr = new T[_capacity];
-			resize(_size);
+
+			for (size_type i = 0; i < n; i++)
+				ptr[i] = value;
 		}
 
 		~vector () {

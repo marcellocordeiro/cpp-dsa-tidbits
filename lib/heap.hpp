@@ -13,17 +13,19 @@
 
 template <typename T, bool (*cmp)(T, T)>
 class heap {
+	using size_type = unsigned int;
+
 	vector<T> H; // heap.size = H.size()
-	unsigned int capacity; // size
+	size_type capacity; // size
 
 	private:
 		void bubble_up () {
-			for (unsigned int i = H.size() - 1; (i > 0) && (cmp(H[i], H[(i - 1)/2])); i = (i - 1)/2)
+			for (size_type i = H.size() - 1; (i > 0) && (cmp(H[i], H[(i - 1)/2])); i = (i - 1)/2)
 				swap(H[i], H[(i - 1)/2]);
 		}
 
-		void heapfy (unsigned int i) {
-			unsigned int l = 2*i + 1, r = 2*i + 2, m = i;
+		void heapfy (size_type i) {
+			size_type l = 2*i + 1, r = 2*i + 2, m = i;
 
 			if (l < H.size() && cmp(H[l], H[m]))
 				m = l;
@@ -40,14 +42,18 @@ class heap {
 	public:
 		heap (): capacity(1) {}
 
-		unsigned int size () {
+		bool empty () {
+			return (H.size() == 0);
+		}
+
+		size_type size () {
 			return H.size();
 		}
 
 		void build (vector<T> v) {
 			H = v;
 
-			for (unsigned int i = H.size()/2; i > 0; i--)
+			for (size_type i = H.size()/2; i > 0; i--)
 				heapfy(i - 1);
 		}
 

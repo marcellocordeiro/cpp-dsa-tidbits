@@ -64,8 +64,7 @@ class graph {
 
 // =========== DFS =========== //
 void graph::dfs () { // all vertices
-	vector<bool> P(_size);
-	fill(P.begin(), P.end(), false);
+	vector<bool> P(_size, false);
 
 	for (int s = 0; s < _size; s++)
 		if (P[s] == false)
@@ -73,8 +72,7 @@ void graph::dfs () { // all vertices
 }
 
 void graph::dfs (int s) { // s is the source
-	vector<bool> P(_size);
-	fill(P.begin(), P.end(), false);
+	vector<bool> P(_size, false);
 
 	dfs_visit(s, P);
 }
@@ -98,8 +96,7 @@ void graph::dfs_visit (int s, vector<bool> &P) {
 
 // =========== BFS =========== //
 void graph::bfs () {
-	vector<bool> P(_size);
-	fill(P.begin(), P.end(), false);
+	vector<bool> P(_size, false);
 
 	for (int s = 0; s < _size; s++)
 		if (P[s] == false)
@@ -107,8 +104,7 @@ void graph::bfs () {
 }
 
 void graph::bfs (int s) {
-	vector<bool> P(_size);
-	fill(P.begin(), P.end(), false);
+	vector<bool> P(_size, false);
 
 	bfs_visit(s, P);
 }
@@ -143,20 +139,15 @@ void graph::bfs_visit (int s, vector<bool> &P) {
 // =========================== //
 
 void graph::dijkstra (int s) {
-	vector<int> D(_size), F(_size);
-	fill(D.begin(), D.end(), inf);
-	fill(F.begin(), F.end(), -1);
-
-	D[0] = 0;
-
+	vector<int> D(_size, inf), F(_size, -1);
 	heap<pair<int, int>, less> h;
 
+	D[0] = 0;
 	h.push(make_pair(D[s], s)); // pair.first é a chave de comparação
 
-	for (int k = 0; k < _size; k++) {
-		pair<int, int> du = h.top(); // du.first = d, du.second = u
+	while (!h.empty()) {
+		int u = h.top().second;
 		h.pop();
-		int u = du.second;
 
 		for (auto it : G[u]) {
 			if (D[u] + it.second < D[it.first]) {
