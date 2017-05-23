@@ -1,7 +1,7 @@
 #ifndef __pair_hpp_included__
 #define __pair_hpp_included__
 
-template <class T1, class T2>
+template <typename T1, typename T2>
 struct pair {
 	T1 first;
 	T2 second;
@@ -28,7 +28,11 @@ struct pair {
 		
 		return os;
 	}
-
 };
+
+template <typename T1, typename T2>
+pair<T1, T2> make_pair (T1 first, T2 second) {
+	return pair<T1, T2>(first, second);
+}
 
 #endif

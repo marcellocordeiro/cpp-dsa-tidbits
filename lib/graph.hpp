@@ -146,15 +146,16 @@ void graph::dijkstra (int s) {
 	vector<int> D(_size), F(_size);
 	fill(D.begin(), D.end(), inf);
 	fill(F.begin(), F.end(), -1);
-	
+
 	D[0] = 0;
 
 	heap<pair<int, int>, less> h;
-	
-	h.insert({0, s}); // pair.first é a chave de comparação
+
+	h.push(make_pair(D[s], s)); // pair.first é a chave de comparação
 
 	for (int k = 0; k < _size; k++) {
-		pair<int, int> du = h.extract(); // du.first = d, du.second = u
+		pair<int, int> du = h.top(); // du.first = d, du.second = u
+		h.pop();
 		int u = du.second;
 
 		for (auto it : G[u]) {
@@ -162,13 +163,13 @@ void graph::dijkstra (int s) {
 				D[it.first] = D[u] + it.second;
 				F[it.first] = u;
 
-				h.insert({D[it.first], it.first}); // update??
+				h.push(make_pair(D[it.first], it.first)); // update??
 			}
 		}
 	}
 
-	for (unsigned int i = 0; i < D.size(); i++)
-		std::cout << D[i] << ' ';
+	for (auto it : D)
+		std::cout << it << ' ';
 	std::cout << std::endl;
 }
 

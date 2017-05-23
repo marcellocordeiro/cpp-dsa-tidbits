@@ -148,20 +148,22 @@ void heapTest () {
 	h.build(v);*/
 
 	
-	h.insert(66);
-	h.insert(5);
-	h.insert(9);
-	h.insert(1);
-	h.insert(888);
-	h.insert(77);
-	h.insert(666);
-	h.insert(4);
-	h.insert(11);
+	h.push(66);
+	h.push(5);
+	h.push(9);
+	h.push(1);
+	h.push(888);
+	h.push(77);
+	h.push(666);
+	h.push(4);
+	h.push(11);
 
 	//h.printCap();
 	
-	while (h.size())
-		std::cout << "[" << h.extract() << "] " << std::endl;
+	while (h.size()) {
+		std::cout << "[" << h.top() << "] " << std::endl;
+		h.pop();
+	}
 }
 
 void pairTest () {

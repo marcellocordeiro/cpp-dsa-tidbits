@@ -17,7 +17,7 @@ class heap {
 	unsigned int capacity; // size
 
 	private:
-		void bubbleUp () {
+		void bubble_up () {
 			for (unsigned int i = H.size() - 1; (i > 0) && (cmp(H[i], H[(i - 1)/2])); i = (i - 1)/2)
 				swap(H[i], H[(i - 1)/2]);
 		}
@@ -51,20 +51,21 @@ class heap {
 				heapfy(i - 1);
 		}
 
-		void insert (T value) {
+		void push (T value) {
 			H.push_back(value);
 
-			bubbleUp();
+			bubble_up();
 		}
 
-		T extract () {
-			T r = H[0];
+		T top () {
+			return H[0];
+		}
+
+		void pop () {
 			H[0] = H.back();
 			H.pop_back();
 
 			heapfy(0);
-
-			return r;
 		}
 };
 
