@@ -47,6 +47,9 @@ class graph {
 		void bfs (int);
 		void bfs_visit (int, vector<bool>&);
 
+		int shortest_path (int, int);
+		void shortest_path (int, int, vector<int>&);
+
 		void dijkstra (int);
 
 		friend std::ostream& operator<< (std::ostream &os, graph &g) {
@@ -117,7 +120,7 @@ void graph::bfs_visit (int s, vector<bool> &P) {
 	P[s] = true;
 
 	while (q.size()) {
-		int u = q.top();
+		int u = q.front();
 		q.pop();
 
 		// pre_visit(u);
@@ -137,6 +140,39 @@ void graph::bfs_visit (int s, vector<bool> &P) {
 	}
 }
 // =========================== //
+
+int graph::shortest_path (int A, int B) {
+	vector<int> D(_size, inf);
+
+	graph::shortest_path(A, B, D);
+
+	return D[B];
+}
+
+void graph::shortest_path (int s, int d, vector<int> &D) {
+	D[s] = 0;
+
+	queue<int> q;
+	q.push(s);
+
+	while (!q.empty()) {
+		int u = q.front();
+		q.pop();
+
+		for (auto it : G[u]) {
+			int v = it.first;
+
+			if (D[v] == -1) {
+				D[v] = D[u] + 1;
+
+				if (v == d)
+					return;
+
+				q.push(v);
+			}
+		}
+	}
+}
 
 void graph::dijkstra (int s) {
 	vector<int> D(_size, inf), F(_size, -1);

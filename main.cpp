@@ -112,7 +112,7 @@ void queueTest () {
 	q.push(66);
 
 	while (q.size()) {
-		std::cout << "pop " << q.top() << '\n';
+		std::cout << "pop " << q.front() << '\n';
 		q.pop();
 	}
 	//std::cout << "pop " << q.pop() << '\n';

@@ -201,12 +201,16 @@ class stack: private list<T> {
 template <typename T>
 class queue: private list<T> {
 	public:
-		T top () {
+		T front () {
 			return list<T>::front();
 		}
 
 		typename list<T>::size_type size () {
-			return list<T>::_size;
+			return list<T>::size();
+		}
+
+		bool empty () {
+			return (list<T>::size() == 0);
 		}
 
 		void push (T value) {
