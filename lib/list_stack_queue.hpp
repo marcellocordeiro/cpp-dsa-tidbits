@@ -1,33 +1,19 @@
 #ifndef __list_stack_queue_hpp_included__
 #define __list_stack_queue_hpp_included__
 
-namespace ll { // linked list
-	template <typename T>
-	struct node {
-		T data;
-		node<T> *prev;
-		node<T> *next;
-
-		node (): prev(nullptr), next(nullptr) {}
-
-		node (T value, node<T> *prev, node<T> *next): data(value), prev(prev), next(next) {}
-	};
-}
-
 template <typename T>
 class list {
 	protected:
-		typedef ll::node<T>* _iterator;
+		struct node;
 		using size_type = unsigned int;
 
-		ll::node<T> *head;
-		ll::node<T> *tail;
+		node *head;
+		node *tail;
 		size_type _size;
 
-
 	private:
-		void erase (ll::node<T> *ptr) {
-			ll::node<T> *temp = ptr;
+		void erase (node *ptr) {
+			node *temp = ptr;
 
 			if (ptr->next != nullptr)
 				ptr->next->prev = ptr->prev;
@@ -39,8 +25,8 @@ class list {
 			_size--;
 		}
 
-		void insert (T value, ll::node<T> *ptr) {
-			ll::node<T> *temp = new ll::node<T>(value, ptr, ptr->next);
+		void insert (T value, node *ptr) {
+			node *temp = new node(value, ptr, ptr->next);
 
 			if (ptr->next != nullptr)
 				ptr->next->prev = temp;
@@ -50,7 +36,7 @@ class list {
 			_size++;
 		}
 		
-		void delete_list (ll::node<T> *ptr) {
+		void delete_list (node *ptr) {
 			if (ptr == nullptr)
 				return;
 
@@ -60,38 +46,8 @@ class list {
 		}
 
 	public:
-		struct iterator {
-			_iterator ptr;
-
-			iterator () {}
-			iterator (_iterator it): ptr(it) {}
-
-			_iterator &operator= (_iterator rhs) {
-				ptr = rhs;
-				return ptr;
-			}
-
-			bool operator!= (iterator rhs) {
-				return !(ptr == rhs.ptr);
-			}
-
-			T &operator* () {
-				return ptr->data;
-			}
-
-			iterator &operator++ (int) {
-				ptr = ptr->next;
-				return *this;
-			}
-
-			iterator &operator++ () {
-				ptr = ptr->next;
-				return *this;
-			}
-		};
-
 		list (): _size(0) {
-			head = new ll::node<T>;
+			head = new node;
 			tail = head;
 		}
 
@@ -99,9 +55,7 @@ class list {
 			delete_list(head);
 		}
 
-		size_type size () {
-			return _size;
-		}
+		class iterator;
 
 		iterator begin () {
 			return iterator(head->next);
@@ -111,11 +65,19 @@ class list {
 			return iterator(nullptr);
 		}
 
-		T front () {
+		inline bool empty () {
+			return (_size == 0);
+		}
+
+		inline size_type size () {
+			return _size;
+		}
+
+		inline T front () {
 			return head->next->data;
 		}
 
-		T back () {
+		inline T back () {
 			return tail->data;
 		}
 
@@ -126,12 +88,6 @@ class list {
 				tail = head->next;
 		}
 
-		void push_back (T value) {
-			insert(value, tail);
-
-			tail = tail->next;
-		}
-
 		void pop_front () {
 			if (_size == 0)
 				return;
@@ -140,6 +96,12 @@ class list {
 
 			if (_size == 0)
 				tail = head;
+		}
+
+		void push_back (T value) {
+			insert(value, tail);
+
+			tail = tail->next;
 		}
 
 		void pop_back () {
@@ -179,21 +141,67 @@ class list {
 };
 
 template <typename T>
-class stack: private list<T> {
+struct list<T>::node {
+	T data;
+	node *prev;
+	node *next;
+
+	node (): prev(nullptr), next(nullptr) {}
+
+	node (T value, node *prev, node *next): data(value), prev(prev), next(next) {}
+};
+
+template <typename T>
+class list<T>::iterator {
+	node *ptr;
+
 	public:
-		T top () {
-			return list<T>::front();
+		iterator (node *it): ptr(it) {}
+
+		node *operator= (node *rhs) {
+			ptr = rhs;
+			return ptr;
 		}
 
-		typename list<T>::size_type size () {
+		inline bool operator!= (iterator rhs) {
+			return !(ptr == rhs.ptr);
+		}
+
+		inline T &operator* () {
+			return ptr->data;
+		}
+
+		iterator &operator++ (int) {
+			ptr = ptr->next;
+			return *this;
+		}
+
+		iterator &operator++ () {
+			ptr = ptr->next;
+			return *this;
+		}
+};
+
+template <typename T>
+class stack: private list<T> {
+	public:
+		inline bool empty () {
+			return list<T>::empty();
+		}
+		
+		inline typename list<T>::size_type size () {
 			return list<T>::_size;
 		}
 
-		void push (T value) {
+		inline T top () {
+			return list<T>::front();
+		}
+
+		inline void push (T value) {
 			list<T>::push_front(value);
 		}
 
-		void pop () {
+		inline void pop () {
 			list<T>::pop_front();
 		}
 };
@@ -201,23 +209,27 @@ class stack: private list<T> {
 template <typename T>
 class queue: private list<T> {
 	public:
-		T front () {
-			return list<T>::front();
+		inline bool empty () {
+			return list<T>::empty();
 		}
 
-		typename list<T>::size_type size () {
+		inline typename list<T>::size_type size () {
 			return list<T>::size();
 		}
 
-		bool empty () {
-			return (list<T>::size() == 0);
+		inline T front () {
+			return list<T>::front();
 		}
 
-		void push (T value) {
+		inline T back () {
+			return list<T>::back();
+		}
+
+		inline void push (T value) {
 			list<T>::push_back(value);
 		}
 
-		void pop () {
+		inline void pop () {
 			list<T>::pop_front();
 		}
 };

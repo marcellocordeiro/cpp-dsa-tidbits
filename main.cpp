@@ -68,20 +68,20 @@ void listTest () {
 		gqlist2.push_front(i * 3);
 	}
 
-	std::cout << "\nList 1 (gqlist1) is : ";
+	std::cout << "\nList 1 (gqlist1) is : " << std::endl;
 	std::cout << gqlist1;
 
-	std::cout << "\nList 2 (gqlist2) is : ";
+	std::cout << "\nList 2 (gqlist2) is : " << std::endl;
 	std::cout << gqlist2;
 
 	std::cout << "\ngqlist1.front() : " << gqlist1.front();
 	std::cout << "\ngqlist1.back() : " << gqlist1.back();
 
-	std::cout << "\ngqlist1.pop_front() : ";
+	std::cout << "\ngqlist1.pop_front() : " << std::endl;
 	gqlist1.pop_front();
 	std::cout << gqlist1;
 
-	std::cout << "\ngqlist2.pop_back() : ";
+	std::cout << "\ngqlist2.pop_back() : " << std::endl;
 	gqlist2.pop_back();
 	std::cout << gqlist2;
 }
@@ -136,7 +136,7 @@ void bstTest () {
 }
 
 void heapTest () {
-	heap<int, less> h;
+	priority_queue<int, less> h;
 	/*std::*/vector<int> v;
 	
 	/*v.push_back(2);
@@ -263,11 +263,11 @@ void graphTest () {
 int main () {
 	//listTest();
 	//queueTest();
-	//heapTest();
+	heapTest();
 	//vectorTest();
 	//pairTest();
 	//bstTest();
-	graphTest();
+	//graphTest();
 
 
 	//heap<pair<int, int>, less> h;

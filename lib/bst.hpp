@@ -1,27 +1,16 @@
 #ifndef __bst_hpp_included__
 #define __bst_hpp_included__
 
-namespace bt { // binary tree
-	template <typename T>
-	struct node {
-		T data;
-		node *left;
-		node *right;
-
-		node (T value): data(value), left(nullptr), right(nullptr) {}
-
-		node (T value, node<T> *left, node<T> *right): data(value), left(left), right(right) {}
-	};
-}
-
 template <typename T>
 class bst {
-	bt::node<T> *root;
+	struct node;
+
+	node *root;
 	
 	private:
-		bt::node<T> *insert (bt::node<T> *root, T value) {
+		node *insert (node *root, T value) {
 			if (root == nullptr)
-				return new bt::node<T>(value);
+				return new node(value);
 
 			if (root->data > value)
 				root->left = insert(root->left, value);
@@ -31,7 +20,7 @@ class bst {
 			return root;
 		}
 
-		/*void printInOrder (bt::node<T> *root) {
+		/*void printInOrder (node *root) {
 			if (root == nullptr)
 				return;
 
@@ -42,7 +31,7 @@ class bst {
 			return;
 		}*/
 
-		T height (bt::node<T> *root) {
+		T height (node *root) {
 			T l, r;
 
 			if (root == nullptr)
@@ -54,7 +43,7 @@ class bst {
 			return l > r ? (l + 1):(r + 1);
 		}
 
-		bool search (bt::node<T> *root, T value) {
+		bool search (node *root, T value) {
 			if (root == nullptr)
 				return false;
 
@@ -67,14 +56,14 @@ class bst {
 				return search(root->right, value);
 		}
 
-		bt::node<T> *findMin (bt::node<T> *root) {
+		node *findMin (node *root) {
 			if (root->left == nullptr)
 				return root;
 			else
 				return findMin(root->left);
 		}
 
-		bt::node<T> *remove (bt::node<T> *root, int value) {
+		node *remove (node *root, int value) {
 			if (root == nullptr)
 				return nullptr;
 
@@ -84,19 +73,19 @@ class bst {
 				root->right = remove(root->right, value);
 			} else { //value == root->data
 				if (root->left == nullptr) {
-					bt::node<T> *temp = root->right;
+					node *temp = root->right;
 
 					delete root;
 					
 					return temp;
 				} else if (root->right == nullptr) {
-					bt::node<T> *temp = root->left;
+					node *temp = root->left;
 
 					delete root;
 					
 					return temp;
 				} else {
-					bt::node<T> *temp = findMin(root->right);
+					node *temp = findMin(root->right);
 					root->data = temp->data;
 					root->right = remove(root->right, temp->data);
 				}
@@ -105,7 +94,7 @@ class bst {
 			return root;
 		}
 
-		void deleteTree (bt::node<T> *root) {
+		void deleteTree (node *root) {
 			if (root == nullptr)
 				return;
 
@@ -131,21 +120,32 @@ class bst {
 			cout << "\n";
 		}*/
 
-		T height () {
+		inline T height () {
 			return height(root);
 		}
 
-		void insert (T value) {
+		inline void insert (T value) {
 			root = insert(root, value);
 		}
 
-		void remove (T value) {
+		inline void remove (T value) {
 			root = remove(root, value);
 		}
 
-		bool search (T value) {
+		inline bool search (T value) {
 			return search(root, value);
 		}
+};
+
+template <typename T>
+struct bst<T>::node {
+	T data;
+	node *left;
+	node *right;
+
+	node (T value): data(value), left(nullptr), right(nullptr) {}
+
+	node (T value, node *left, node *right): data(value), left(left), right(right) {}
 };
 
 #endif

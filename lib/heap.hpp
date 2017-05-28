@@ -12,20 +12,32 @@
 	// heap.size(H): quantidade de elementos na heap H
 
 template <typename T, bool (*cmp)(T, T)>
-class heap {
+class priority_queue {
 	using size_type = unsigned int;
 
 	vector<T> H; // heap.size = H.size()
 	size_type capacity; // size
 
 	private:
-		void bubble_up () {
-			for (size_type i = H.size() - 1; (i > 0) && (cmp(H[i], H[(i - 1)/2])); i = (i - 1)/2)
-				swap(H[i], H[(i - 1)/2]);
+		inline size_type parent (size_type i) {
+			return (i - 1)/2;
 		}
 
-		void heapfy (size_type i) {
-			size_type l = 2*i + 1, r = 2*i + 2, m = i;
+		inline size_type left (size_type i) {
+			return 2*i + 1;
+		}
+
+		inline size_type right (size_type i) {
+			return 2*i + 2;
+		}
+
+		void bubble_up () {
+			for (size_type i = H.size() - 1; (i > 0) && (cmp(H[i], H[parent(i)])); i = parent(i))
+				swap(H[i], H[parent(i)]);
+		}
+
+		void heapify (size_type i) {
+			size_type l = left(i), r = right(i), m = i;
 
 			if (l < H.size() && cmp(H[l], H[m]))
 				m = l;
@@ -35,26 +47,33 @@ class heap {
 
 			if (m != i) {
 				swap(H[i], H[m]);
-				heapfy(m);
+				heapify(m);
 			}
 		}
 
 	public:
-		heap (): capacity(1) {}
+		priority_queue (): capacity(1) {}
 
-		bool empty () {
+		priority_queue (vector<T> &v): capacity(1) {
+			H = v;
+
+			while (capacity < H.size())
+				capacity *= 2;
+
+			for (size_type i = H.size()/2; i > 0; i--)
+				heapify(i - 1);
+		}
+
+		inline bool empty () {
 			return (H.size() == 0);
 		}
 
-		size_type size () {
+		inline size_type size () {
 			return H.size();
 		}
 
-		void build (vector<T> v) {
-			H = v;
-
-			for (size_type i = H.size()/2; i > 0; i--)
-				heapfy(i - 1);
+		inline T top () {
+			return H[0];
 		}
 
 		void push (T value) {
@@ -63,15 +82,11 @@ class heap {
 			bubble_up();
 		}
 
-		T top () {
-			return H[0];
-		}
-
 		void pop () {
 			H[0] = H.back();
 			H.pop_back();
 
-			heapfy(0);
+			heapify(0);
 		}
 };
 

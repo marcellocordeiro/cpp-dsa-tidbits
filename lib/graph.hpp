@@ -176,21 +176,21 @@ void graph::shortest_path (int s, int d, vector<int> &D) {
 
 void graph::dijkstra (int s) {
 	vector<int> D(_size, inf), F(_size, -1);
-	heap<pair<int, int>, less> h;
+	priority_queue<pair<int, int>, less> pq;
 
 	D[0] = 0;
-	h.push(make_pair(D[s], s)); // pair.first é a chave de comparação
+	pq.push(make_pair(D[s], s)); // pair.first é a chave de comparação
 
-	while (!h.empty()) {
-		int u = h.top().second;
-		h.pop();
+	while (!pq.empty()) {
+		int u = pq.top().second;
+		pq.pop();
 
 		for (auto it : G[u]) {
 			if (D[u] + it.second < D[it.first]) {
 				D[it.first] = D[u] + it.second;
 				F[it.first] = u;
 
-				h.push(make_pair(D[it.first], it.first)); // update??
+				pq.push(make_pair(D[it.first], it.first)); // update??
 			}
 		}
 	}
