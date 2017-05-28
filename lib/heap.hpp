@@ -11,8 +11,8 @@
 	// size(H): capacidade do array
 	// heap.size(H): quantidade de elementos na heap H
 
-template <typename T, class Compare>
-class priority_queue {
+template <typename T, class Compare = less<T>> // less<T> = default parameter
+class priority_queue {						   // default from stl is greater?
 	using size_type = unsigned int;
 
 	vector<T> H; // heap.size = H.size()

@@ -156,7 +156,7 @@ class list<T>::iterator {
 	node *ptr;
 
 	public:
-		iterator (node *it): ptr(it) {}
+		iterator (node *it = nullptr): ptr(it) {} // nullptr = default parameter
 
 		node *operator= (node *rhs) {
 			ptr = rhs;

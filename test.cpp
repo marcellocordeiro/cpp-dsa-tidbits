@@ -5,8 +5,9 @@
 #include "lib/heap.hpp"
 #include <algorithm>
 
+
 void heapTest () {
-	priority_queue<int, less<int>> h;
+	priority_queue<int> h;
 	vector<int> v;
 	
 	v.push_back(2);
@@ -35,10 +36,10 @@ void heapTest () {
 		h.pop();
 	}
 
-	std::sort(v.begin(), v.end(), greater<int>());
+	//std::sort(v.begin(), v.end(), greater<int>());
 
-	for (auto it : v)
-		std::cout << it << ' ';
+	//for (auto it : v)
+	//	std::cout << it << ' ';
 }
 
 int main () {
