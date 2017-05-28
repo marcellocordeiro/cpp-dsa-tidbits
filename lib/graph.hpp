@@ -176,7 +176,7 @@ void graph::shortest_path (int s, int d, vector<int> &D) {
 
 void graph::dijkstra (int s) {
 	vector<int> D(_size, inf), F(_size, -1);
-	priority_queue<pair<int, int>, less> pq;
+	priority_queue<pair<int, int>, less<pair<int, int>>> pq;
 
 	D[0] = 0;
 	pq.push(make_pair(D[s], s)); // pair.first é a chave de comparação

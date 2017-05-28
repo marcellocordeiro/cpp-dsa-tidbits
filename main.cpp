@@ -136,7 +136,7 @@ void bstTest () {
 }
 
 void heapTest () {
-	priority_queue<int, less> h;
+	priority_queue<int, less<int>> h;
 	/*std::*/vector<int> v;
 	
 	/*v.push_back(2);
@@ -226,12 +226,6 @@ void graphTest () {
 
 
 	graph G(9);
-	/*G.addEdge({0, 1}, 2);
-	G.addEdge({0, 2}, 3);
-	G.addEdge({1, 2}, 4);
-	G.addEdge({2, 0}, 6);
-	G.addEdge({2, 3}, 7);
-	G.addEdge({3, 3}, 1);*/
 
 	G.addEdge({0, 1}, 4);
 	G.addEdge({0, 7}, 8);
@@ -263,11 +257,11 @@ void graphTest () {
 int main () {
 	//listTest();
 	//queueTest();
-	heapTest();
+	//heapTest();
 	//vectorTest();
 	//pairTest();
 	//bstTest();
-	//graphTest();
+	graphTest();
 
 
 	//heap<pair<int, int>, less> h;

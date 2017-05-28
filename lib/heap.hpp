@@ -11,12 +11,13 @@
 	// size(H): capacidade do array
 	// heap.size(H): quantidade de elementos na heap H
 
-template <typename T, bool (*cmp)(T, T)>
+template <typename T, class Compare>
 class priority_queue {
 	using size_type = unsigned int;
 
 	vector<T> H; // heap.size = H.size()
 	size_type capacity; // size
+	Compare cmp;
 
 	private:
 		inline size_type parent (size_type i) {

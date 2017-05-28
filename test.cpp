@@ -1,59 +1,48 @@
 #include <iostream>
 #include <string>
-/*
-#include "lib/algorithm.hpp"
+
 #include "lib/functional.hpp"
-#include "lib/utility.hpp"
-#include "lib/vector.hpp"
-#include "lib/bst.hpp"*/
-#include "lib/list_stack_queue.hpp"
-/*#include "lib/heap.hpp"
-#include "lib/graph.hpp"*/
+#include "lib/heap.hpp"
+#include <algorithm>
+
+void heapTest () {
+	priority_queue<int, less<int>> h;
+	vector<int> v;
+	
+	v.push_back(2);
+	v.push_back(3);
+	v.push_back(6);
+	v.push_back(8);
+	v.push_back(1);
+	v.push_back(55);
+	v.push_back(45);
+	v.push_back(1000);
+	
+	h.push(66);
+	h.push(5);
+	h.push(9);
+	h.push(1);
+	h.push(888);
+	h.push(77);
+	h.push(666);
+	h.push(4);
+	h.push(11);
+
+	//h.printCap();
+	
+	while (h.size()) {
+		std::cout << "[" << h.top() << "] " << std::endl;
+		h.pop();
+	}
+
+	std::sort(v.begin(), v.end(), greater<int>());
+
+	for (auto it : v)
+		std::cout << it << ' ';
+}
 
 int main () {
-	queue<int> l;
-	//list<int>::iterator it;
-	
-	for (int i = 0; i < 10; i++) {
-		l.push(i * 2);
-	}
-
-	//for (auto &it : l) {
-	//	std::cout << it << ' ';
-	//}
-
-	while (l.size()) {
-		std::cout << l.top() << ' ';
-		l.pop();
-	}
-
-	std::cout << std::endl;
-
-	//std::cout << l;
-
-	/*vector<int> v, a;
-
-	for (int i = 0; i < 10; i++)
-		v.push_back(rand() % 30);*/
-
-	/*for (unsigned int i = 0; i < 10; i++)
-		std::cout << v[i] << ' ';
-	std::cout << std::endl;*/
-
-	/*a = v;
-
-	for (unsigned int i = 0; i < 10; i++)
-		std::cout << a[i] << ' ';
-	std::cout << std::endl;*/
-
-	//quick_sort(v);
-
-	/*for (unsigned int i = 0; i < 10; i++)
-		std::cout << v[i] << ' ';
-	std::cout << std::endl;*/
-
-	/*for (auto it = v.begin(); it != v.end(); it++)
-		std::cout << *it << ' ';*/
+	heapTest();
 
 	return 0;
 }
