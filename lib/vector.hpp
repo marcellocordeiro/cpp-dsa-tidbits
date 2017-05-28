@@ -30,20 +30,32 @@ class vector {
 			delete[] ptr;
 		}
 
-		size_type size () {
+		inline iterator begin () {
+			return ptr;
+		}
+
+		inline iterator end () {
+			return ptr + _size;
+		}
+
+		inline size_type size () {
 			return _size;
 		}
 
-		size_type capacity () {
+		inline size_type capacity () {
 			return _capacity;
 		}
 
-		void clear () {
-			delete[] ptr;
-			_size = 0;
-			_capacity = 32;
-			ptr = new T[_capacity];
-			//resize(_capacity);
+		inline bool empty () {
+			return (_size == 0);
+		}
+
+		inline T front () {
+			return ptr[0];
+		}
+
+		inline T back () {
+			return ptr[_size - 1];
 		}
 
 		void resize (size_type newSize) {
@@ -79,6 +91,8 @@ class vector {
 			ptr = temp;
 		}
 
+		// void reserve (size_type newSize)
+
 		void push_back (T value) {
 			if (_size == _capacity)
 				resize(_capacity*2);
@@ -86,26 +100,25 @@ class vector {
 			ptr[_size++] = value;
 		}
 
-		void pop_back () {
+		inline void pop_back () {
 			_size--;
-			//return ptr[--_size];
 		}
 
-		T front () {
-			return ptr[0];
+		void clear () {
+			delete[] ptr;
+			_size = 0;
+			_capacity = 32;
+			ptr = new T[_capacity];
+			//resize(_capacity);
 		}
 
-		T back () {
-			return ptr[_size - 1];
+		T &operator[] (size_type i) {
+			return ptr[i];
 		}
 
-		iterator begin () {
-			return ptr;
-		}
-
-		iterator end () {
-			return ptr + _size;
-		}
+		//T operator[] (size_type i) const {
+		//	return ptr[i];
+		//}
 
 		vector<T> &operator= (vector<T> &newVector) {
 			delete[] ptr;
@@ -119,14 +132,6 @@ class vector {
 
 			return *this;
 		}
-
-		T &operator[] (size_type i) {
-			return ptr[i];
-		}
-
-		//T operator[] (size_type i) const {
-		//	return ptr[i];
-		//}
 };
 
 #endif

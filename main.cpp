@@ -10,6 +10,8 @@
 #include "lib/heap.hpp"
 #include "lib/graph.hpp"
 
+#include <algorithm>
+
 void vectorTest () {
 	vector<int> a, b;
 
@@ -21,16 +23,18 @@ void vectorTest () {
 	b.push_back(2);
 	b.push_back(3);
 
-	for (unsigned int i = 0; i < a.size(); i++)
-		std::cout << a[i] << " ";
+	std::sort(a.begin(), a.end());
+
+	for (auto it : a)
+		std::cout << it << " ";
 	std::cout << std::endl;
 
 	a = b;
 
 	a[1] = 10;
 
-	for (unsigned int i = 0; i < a.size(); i++)
-		std::cout << a[i] << " ";
+	for (auto it : a)
+		std::cout << it << " ";
 	std::cout << std::endl;
 }
 
@@ -179,68 +183,22 @@ void pairTest () {
 }
 
 void graphTest () {
-	vector<int> v;
-	vector<pair<int, int>> e;
-
-	/*for (int i = 0; i < 6; i++)
-		v.push_back(i);
-
-	e.push_back({0, 1});
-	e.push_back({0, 2});
-	e.push_back({0, 3});
-	e.push_back({2, 3});
-	e.push_back({4, 5});*/
-
-	for (int i = 0; i < 4/*8*/; i++)
-		v.push_back(i);
-	
-	/*
-	a 0
-	b 1
-	c 2
-	d 3
-	e 4
-	f 5
-	g 6
-	h 7
-	*/
-
-	/*e.push_back({0, 1});
-	e.push_back({0, 2});
-	e.push_back({0, 3});
-	e.push_back({0, 6});
-	e.push_back({1, 4});
-	e.push_back({1, 5});
-	e.push_back({2, 7});
-	e.push_back({2, 5});
-	e.push_back({3, 5});
-	e.push_back({4, 6});*/
-
-
-	/*for (unsigned int i = 0; i < v.size(); i++)
-		std::cout << v[i] << ' ';
-	std::cout << std::endl;
-
-	for (unsigned int i = 0; i < e.size(); i++)
-		std::cout << e[i] << std::endl;*/
-
-
 	graph G(9);
 
-	G.addEdge({0, 1}, 4);
-	G.addEdge({0, 7}, 8);
-	G.addEdge({1, 2}, 8);
-	G.addEdge({1, 7}, 11);
-	G.addEdge({2, 3}, 7);
-	G.addEdge({2, 8}, 2);
-	G.addEdge({2, 5}, 4);
-	G.addEdge({3, 4}, 9);
-	G.addEdge({3, 5}, 14);
-	G.addEdge({4, 5}, 10);
-	G.addEdge({5, 6}, 2);
-	G.addEdge({6, 7}, 1);
-	G.addEdge({6, 8}, 6);
-	G.addEdge({7, 8}, 7);
+	G.addEdge(make_pair(0, 1), 4);
+	G.addEdge(make_pair(0, 7), 8);
+	G.addEdge(make_pair(1, 2), 8);
+	G.addEdge(make_pair(1, 7), 11);
+	G.addEdge(make_pair(2, 3), 7);
+	G.addEdge(make_pair(2, 8), 2);
+	G.addEdge(make_pair(2, 5), 4);
+	G.addEdge(make_pair(3, 4), 9);
+	G.addEdge(make_pair(3, 5), 14);
+	G.addEdge(make_pair(4, 5), 10);
+	G.addEdge(make_pair(5, 6), 2);
+	G.addEdge(make_pair(6, 7), 1);
+	G.addEdge(make_pair(6, 8), 6);
+	G.addEdge(make_pair(7, 8), 7);
 	//G.bfs(2);
 	//std::cout << std::endl;
 	//G.dfs(2);
@@ -258,10 +216,10 @@ int main () {
 	//listTest();
 	//queueTest();
 	//heapTest();
-	//vectorTest();
+	vectorTest();
 	//pairTest();
 	//bstTest();
-	graphTest();
+	//graphTest();
 
 
 	//heap<pair<int, int>, less> h;

@@ -10,11 +10,11 @@ struct pair {
 
 	pair (T1 first, T2 second): first(first), second(second) {}
 
-	bool operator< (pair<T1, T2> p) {
+	bool operator< (const pair<T1, T2> p) const {
 		return first < p.first;
 	}
 
-	bool operator> (pair<T1, T2> p) {
+	bool operator> (const pair<T1, T2> p) const {
 		return first > p.first;
 	}
 

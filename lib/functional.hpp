@@ -3,14 +3,14 @@
 
 template <typename T>
 struct less {
-	bool operator() (T &x, T &y) {
+	bool operator() (const T &x, const T &y) const {
 		return x < y;
 	}
 };
 
 template <typename T>
 struct greater {
-	bool operator() (T &x, T &y) {
+	bool operator() (const T &x, const T &y) const {
 		return x > y;
 	}
 };
