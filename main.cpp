@@ -9,6 +9,7 @@
 #include "lib/list_stack_queue.hpp"
 #include "lib/heap.hpp"
 #include "lib/graph.hpp"
+#include "lib/union_find.hpp"
 
 int main () {
 

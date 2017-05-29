@@ -1,39 +1,47 @@
-struct union_find {
-	int node[10000];
-	int height[10000];
+#ifndef __union_find_hpp_included__
+#define __union_find_hpp_included__
 
-	void make_set (int size) {
-		for (int i = 0; i < size; i++)
-			node[i] = i;
+class union_find {
+	int *node;
+	int *height;
 
-		for (int i = 0; i < size; i++)
-			height[i] = 0;
-	}
+	public:
+		union_find (int size): node(new int[size]), height(new int[size]) { // make_set
+			for (int i = 0; i < size; i++)
+				node[i] = i;
 
-	int find (int p) {
-		if (node[p] != p)
-			node[p] = find(node[p]);
-
-		return node[p];
-	}
-
-	bool union2 (int x, int y) {
-		//x = find(x);
-		//y = find(y);
-
-		//if (x == y)
-		//	return 0;
-
-		if (height[x] < height[y]) {
-			node[x] = y;
-			return 0;
-		} else if (height[x] > height[y]) {
-			node[y] = x;
-			return 1;
-		} else {
-			node[y] = x;
-			height[x]++;
-			return 1;
+			for (int i = 0; i < size; i++)
+				height[i] = 0;
 		}
-	}
+
+		~union_find () {
+			delete[] node;
+			delete[] height;
+		}
+
+		void merge (int x, int y) { // merge = union
+			x = find(x);
+			y = find(y);
+
+			if (x == y)
+				return;
+
+			if (height[x] < height[y]) {
+				node[x] = y;
+			} else if (height[x] > height[y]) {
+				node[y] = x;
+			} else {
+				node[y] = x;
+				height[x]++;
+			}
+		}
+
+		int find (int p) {
+			if (node[p] != p)
+				node[p] = find(node[p]);
+
+			return node[p];
+		}
 };
+
+#endif
