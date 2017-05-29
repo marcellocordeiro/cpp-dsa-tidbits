@@ -34,31 +34,31 @@ class vector {
 			delete[] ptr;
 		}
 
-		inline iterator begin () {
+		inline iterator begin () const {
 			return ptr;
 		}
 
-		inline iterator end () {
+		inline iterator end () const {
 			return ptr + _size;
 		}
 
-		inline size_type size () {
+		inline size_type size () const {
 			return _size;
 		}
 
-		inline size_type capacity () {
+		inline size_type capacity () const {
 			return _capacity;
 		}
 
-		inline bool empty () {
+		inline bool empty () const {
 			return (_size == 0);
 		}
 
-		inline T front () {
+		inline T front () const {
 			return ptr[0];
 		}
 
-		inline T back () {
+		inline T back () const {
 			return ptr[_size - 1];
 		}
 
