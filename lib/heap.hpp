@@ -16,19 +16,19 @@ class priority_queue {						   // default from stl is greater?
 	using size_type = unsigned int;
 
 	vector<T> H; // heap.size = H.size()
-	size_type capacity; // size
+	size_type _capacity; // size
 	Compare cmp;
 
 	private:
-		inline size_type parent (size_type i) {
+		inline size_type parent (size_type i) const {
 			return (i - 1)/2;
 		}
 
-		inline size_type left (size_type i) {
+		inline size_type left (size_type i) const {
 			return 2*i + 1;
 		}
 
-		inline size_type right (size_type i) {
+		inline size_type right (size_type i) const {
 			return 2*i + 2;
 		}
 
@@ -53,27 +53,29 @@ class priority_queue {						   // default from stl is greater?
 		}
 
 	public:
-		priority_queue (): capacity(1) {}
+		priority_queue (): _capacity(1) {}
 
-		priority_queue (vector<T> &v): capacity(1) {
+		priority_queue (const priority_queue<T> &pq): H(pq.H), _capacity(pq._capacity), cmp(pq.cmp) {}
+
+		priority_queue (const vector<T> &v): _capacity(1) {
 			H = v;
 
-			while (capacity < H.size())
-				capacity *= 2;
+			while (_capacity < H.size())
+				_capacity *= 2;
 
 			for (size_type i = H.size()/2; i > 0; i--)
 				heapify(i - 1);
 		}
 
-		inline bool empty () {
+		inline bool empty () const {
 			return (H.size() == 0);
 		}
 
-		inline size_type size () {
+		inline size_type size () const {
 			return H.size();
 		}
 
-		inline T top () {
+		inline T top () const {
 			return H[0];
 		}
 
