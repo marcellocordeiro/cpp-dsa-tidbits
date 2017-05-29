@@ -31,7 +31,7 @@ class bst {
 			return;
 		}*/
 
-		T height (node *root) {
+		T height (node *root) const {
 			T l, r;
 
 			if (root == nullptr)
@@ -43,7 +43,7 @@ class bst {
 			return l > r ? (l + 1):(r + 1);
 		}
 
-		bool search (node *root, T value) {
+		bool search (node *root, T value) const {
 			if (root == nullptr)
 				return false;
 
@@ -56,7 +56,7 @@ class bst {
 				return search(root->right, value);
 		}
 
-		node *findMin (node *root) {
+		node *findMin (node *root) const {
 			if (root->left == nullptr)
 				return root;
 			else
@@ -120,8 +120,12 @@ class bst {
 			cout << "\n";
 		}*/
 
-		inline T height () {
+		inline T height () const {
 			return height(root);
+		}
+
+		inline bool search (T value) const {
+			return search(root, value);
 		}
 
 		inline void insert (T value) {
@@ -130,10 +134,6 @@ class bst {
 
 		inline void remove (T value) {
 			root = remove(root, value);
-		}
-
-		inline bool search (T value) {
-			return search(root, value);
 		}
 };
 
