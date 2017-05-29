@@ -57,27 +57,27 @@ class list {
 
 		class iterator;
 
-		iterator begin () {
+		iterator begin () const {
 			return iterator(head->next);
 		}
 
-		iterator end () {
+		iterator end () const {
 			return iterator(nullptr);
 		}
 
-		inline bool empty () {
+		inline bool empty () const {
 			return (_size == 0);
 		}
 
-		inline size_type size () {
+		inline size_type size () const {
 			return _size;
 		}
 
-		inline T front () {
+		inline T front () const {
 			return head->next->data;
 		}
 
-		inline T back () {
+		inline T back () const {
 			return tail->data;
 		}
 
@@ -163,11 +163,11 @@ class list<T>::iterator {
 			return ptr;
 		}
 
-		inline bool operator!= (iterator rhs) {
+		inline bool operator!= (iterator rhs) const {
 			return !(ptr == rhs.ptr);
 		}
 
-		inline T &operator* () {
+		inline T &operator* () const {
 			return ptr->data;
 		}
 
@@ -185,15 +185,15 @@ class list<T>::iterator {
 template <typename T>
 class stack: private list<T> {
 	public:
-		inline bool empty () {
+		inline bool empty () const {
 			return list<T>::empty();
 		}
 		
-		inline typename list<T>::size_type size () {
-			return list<T>::_size;
+		inline typename list<T>::size_type size () const {
+			return list<T>::size();
 		}
 
-		inline T top () {
+		inline T top () const {
 			return list<T>::front();
 		}
 
@@ -209,19 +209,19 @@ class stack: private list<T> {
 template <typename T>
 class queue: private list<T> {
 	public:
-		inline bool empty () {
+		inline bool empty () const {
 			return list<T>::empty();
 		}
 
-		inline typename list<T>::size_type size () {
+		inline typename list<T>::size_type size () const {
 			return list<T>::size();
 		}
 
-		inline T front () {
+		inline T front () const {
 			return list<T>::front();
 		}
 
-		inline T back () {
+		inline T back () const {
 			return list<T>::back();
 		}
 
