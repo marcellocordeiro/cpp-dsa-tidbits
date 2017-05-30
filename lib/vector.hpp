@@ -62,28 +62,32 @@ class vector {
 			return ptr[_size - 1];
 		}
 
-		void resize (size_type newSize) {
-			if (newSize <= 32)
+		void resize (const size_type new_size, const T value = 0) {
+			// todo
+		}
+
+		void reserve (const size_type new_capacity) {
+			if (new_capacity <= 32)
 				return;
 
-			if (newSize < _size)
-				_size = newSize;
+			if (new_capacity < _size)
+				_size = new_capacity;
 
-			bool capacityChange = false;
+			bool capacity_change = false;
 			
-			if (newSize < _capacity) {
-				while (_capacity/2 >= newSize) {
-					capacityChange = true;
+			if (new_capacity < _capacity) {
+				while (_capacity/2 >= new_capacity) {
+					capacity_change = true;
 					_capacity /= 2;
 				}
-			} else if (newSize > _capacity) {
-				while (_capacity*2 <= newSize) {
-					capacityChange = true;
+			} else if (new_capacity > _capacity) {
+				while (_capacity*2 <= new_capacity) {
+					capacity_change = true;
 					_capacity *= 2;
 				}
 			}
 
-			if (!capacityChange)
+			if (!capacity_change)
 				return;
 
 			T *temp = new T[_capacity];
@@ -95,11 +99,9 @@ class vector {
 			ptr = temp;
 		}
 
-		// void reserve (size_type newSize)
-
 		void push_back (const T value) {
 			if (_size == _capacity)
-				resize(_capacity*2);
+				reserve(_capacity*2);
 
 			ptr[_size++] = value;
 		}
@@ -127,7 +129,6 @@ class vector {
 			_size = 0;
 			_capacity = 32;
 			ptr = new T[_capacity];
-			//resize(_capacity);
 		}
 
 		T &operator[] (const size_type i) {
@@ -145,7 +146,6 @@ class vector {
 			
 			return *this;
 		}
-
 };
 
 #endif

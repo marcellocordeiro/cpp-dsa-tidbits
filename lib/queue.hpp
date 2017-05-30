@@ -22,7 +22,7 @@ class queue: private list<T> {
 			return list<T>::back();
 		}
 
-		inline void push (T value) {
+		inline void push (const T value) {
 			list<T>::push_back(value);
 		}
 

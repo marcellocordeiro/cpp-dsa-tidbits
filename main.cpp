@@ -14,18 +14,9 @@
 #include "lib/union_find.hpp"
 
 int main () {
-	list<int> l1, l2;
+	vector<int> k;
 
-	l1.push_back(1);
-	l1.push_front(3);
-
-
-	l2 = l1;
-	l1.push_back(444);
-
-	std::cout << l2;
-	std::cout << l1;
-
+	k.resize(10, 2);
 
 	return 0;
 }

@@ -18,7 +18,7 @@ class stack: private list<T> {
 			return list<T>::front();
 		}
 
-		inline void push (T value) {
+		inline void push (const T value) {
 			list<T>::push_front(value);
 		}
 
