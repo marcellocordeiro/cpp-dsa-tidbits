@@ -34,11 +34,11 @@ class vector {
 			delete[] ptr;
 		}
 
-		inline iterator begin () const {
+		inline iterator begin () {
 			return ptr;
 		}
 
-		inline iterator end () const {
+		inline iterator end () {
 			return ptr + _size;
 		}
 
