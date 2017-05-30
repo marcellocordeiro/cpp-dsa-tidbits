@@ -25,7 +25,7 @@ class list {
 			_size--;
 		}
 
-		void insert (T value, node *ptr) {
+		void insert (const T value, node *ptr) {
 			node *temp = new node(value, ptr, ptr->next);
 
 			if (ptr->next != nullptr)
@@ -49,6 +49,14 @@ class list {
 		list (): _size(0) {
 			head = new node;
 			tail = head;
+		}
+
+		list (const list<T> &l): _size(0) {
+			head = new node;
+			tail = head;
+
+			for (const auto &it : l)
+				push_back(it);
 		}
 
 		~list () {
@@ -81,7 +89,7 @@ class list {
 			return tail->data;
 		}
 
-		void push_front (T value) {
+		void push_front (const T value) {
 			insert(value, head);
 
 			if (_size == 1)
@@ -98,7 +106,7 @@ class list {
 				tail = head;
 		}
 
-		void push_back (T value) {
+		void push_back (const T value) {
 			insert(value, tail);
 
 			tail = tail->next;
@@ -113,7 +121,7 @@ class list {
 			erase(tail->next);
 		}
 
-		friend std::ostream& operator<< (std::ostream &os, list<T> &l) {
+		friend std::ostream& operator<< (std::ostream &os, const list<T> &l) {
 			for (auto it = l.head->next; it != nullptr; it = it->next) {
 				if (it->prev == l.head)
 					os << "(prev: S) ";
@@ -148,7 +156,7 @@ struct list<T>::node {
 
 	node (): prev(nullptr), next(nullptr) {}
 
-	node (T value, node *prev, node *next): data(value), prev(prev), next(next) {}
+	node (const T value, node *prev, node *next): data(value), prev(prev), next(next) {}
 };
 
 template <typename T>
@@ -158,7 +166,7 @@ class list<T>::iterator {
 	public:
 		iterator (node *it = nullptr): ptr(it) {} // nullptr = default parameter
 
-		node *operator= (node *rhs) {
+		node *operator= (const node *rhs) {
 			ptr = rhs;
 			return ptr;
 		}
