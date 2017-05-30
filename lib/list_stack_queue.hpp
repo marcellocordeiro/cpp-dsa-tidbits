@@ -57,11 +57,11 @@ class list {
 
 		class iterator;
 
-		iterator begin () const {
+		iterator begin () {
 			return iterator(head->next);
 		}
 
-		iterator end () const {
+		iterator end () {
 			return iterator(nullptr);
 		}
 
