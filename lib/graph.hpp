@@ -66,7 +66,6 @@ class graph {
 		}
 };
 
-// =========== DFS =========== //
 void graph::dfs () { // all vertices
 	vector<bool> P(_size, false);
 
@@ -96,9 +95,7 @@ void graph::dfs_visit (int s, vector<bool> &P) {
 
 	// post_visit(s);
 }
-// =========================== //
 
-// =========== BFS =========== //
 void graph::bfs () {
 	vector<bool> P(_size, false);
 
@@ -140,7 +137,6 @@ void graph::bfs_visit (int s, vector<bool> &P) {
 		// post_visit(u);
 	}
 }
-// =========================== //
 
 int graph::shortest_path (int A, int B) {
 	vector<int> D(_size, inf);

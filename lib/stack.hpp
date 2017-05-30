@@ -9,7 +9,7 @@ class stack: private list<T> {
 		inline bool empty () const {
 			return list<T>::empty();
 		}
-		
+
 		inline typename list<T>::size_type size () const {
 			return list<T>::size();
 		}

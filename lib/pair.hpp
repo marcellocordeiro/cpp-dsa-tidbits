@@ -25,7 +25,7 @@ struct pair {
 
 	friend std::ostream& operator<< (std::ostream &os, pair<T1, T2> &p) {
 		os << '(' << p.first << ", " << p.second << ')';
-		
+
 		return os;
 	}
 };

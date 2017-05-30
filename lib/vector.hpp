@@ -143,7 +143,7 @@ class vector {
 			vector<T> temp(rhs);
 			
 			swap(temp);
-			
+
 			return *this;
 		}
 };
