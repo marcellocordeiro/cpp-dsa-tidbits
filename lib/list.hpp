@@ -1,5 +1,5 @@
-#ifndef __list_stack_queue_hpp_included__
-#define __list_stack_queue_hpp_included__
+#ifndef __list_hpp_included__
+#define __list_hpp_included__
 
 template <typename T>
 class list {
@@ -51,11 +51,11 @@ class list {
 			tail = head;
 		}
 
-		list (const list<T> &l): _size(0) {
+		list (list<T> &l): _size(0) {
 			head = new node;
 			tail = head;
 
-			for (const auto &it : l)
+			for (auto &it : l)
 				push_back(it);
 		}
 
@@ -119,6 +119,28 @@ class list {
 			tail = tail->prev;
 
 			erase(tail->next);
+		}
+
+		void swap (list<T> &l) {
+			node *l_head = l.head;
+			node *l_tail = l.tail;
+			size_type l_size = l._size;
+
+			l.head = head;
+			l.tail = tail;
+			l._size = _size;
+
+			head = l_head;
+			tail = l_tail;
+			_size = l_size;
+		}
+
+		list<T> &operator= (list<T> &rhs) {
+			list<T> temp(rhs);
+			
+			swap(temp);
+			
+			return *this;
 		}
 
 		friend std::ostream& operator<< (std::ostream &os, const list<T> &l) {
@@ -187,58 +209,6 @@ class list<T>::iterator {
 		iterator &operator++ () {
 			ptr = ptr->next;
 			return *this;
-		}
-};
-
-template <typename T>
-class stack: private list<T> {
-	public:
-		inline bool empty () const {
-			return list<T>::empty();
-		}
-		
-		inline typename list<T>::size_type size () const {
-			return list<T>::size();
-		}
-
-		inline T top () const {
-			return list<T>::front();
-		}
-
-		inline void push (T value) {
-			list<T>::push_front(value);
-		}
-
-		inline void pop () {
-			list<T>::pop_front();
-		}
-};
-
-template <typename T>
-class queue: private list<T> {
-	public:
-		inline bool empty () const {
-			return list<T>::empty();
-		}
-
-		inline typename list<T>::size_type size () const {
-			return list<T>::size();
-		}
-
-		inline T front () const {
-			return list<T>::front();
-		}
-
-		inline T back () const {
-			return list<T>::back();
-		}
-
-		inline void push (T value) {
-			list<T>::push_back(value);
-		}
-
-		inline void pop () {
-			list<T>::pop_front();
 		}
 };
 
