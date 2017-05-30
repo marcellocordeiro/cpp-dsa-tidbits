@@ -97,7 +97,7 @@ class vector {
 
 		// void reserve (size_type newSize)
 
-		void push_back (T value) {
+		void push_back (const T value) {
 			if (_size == _capacity)
 				resize(_capacity*2);
 
@@ -108,6 +108,20 @@ class vector {
 			_size--;
 		}
 
+		void swap (vector<T> &v) {
+			T *v_ptr = v.ptr;
+			T v_size = v._size;
+			T v_capacity = v._capacity;
+
+			v.ptr = ptr;
+			v._size = _size;
+			v._capacity = _capacity;
+
+			ptr = v_ptr;
+			_size = v_size;
+			_capacity = v_capacity;
+		}
+
 		void clear () {
 			delete[] ptr;
 			_size = 0;
@@ -116,26 +130,22 @@ class vector {
 			//resize(_capacity);
 		}
 
-		T &operator[] (size_type i) {
+		T &operator[] (const size_type i) {
 			return ptr[i];
 		}
 
-		T &operator[] (size_type i) const {
+		T &operator[] (const size_type i) const {
 			return ptr[i];
 		}
 
 		vector<T> &operator= (const vector<T> &rhs) {
-			delete[] ptr;
-
-			_size = rhs._size;
-			_capacity = rhs._capacity;
-			ptr = new T[_capacity];
-
-			for (size_type i = 0; i < _size; i++)
-				ptr[i] = rhs[i];
-
+			vector<T> temp(rhs);
+			
+			swap(temp);
+			
 			return *this;
 		}
+
 };
 
 #endif
