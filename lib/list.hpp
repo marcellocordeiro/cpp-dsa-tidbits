@@ -51,11 +51,11 @@ class list {
 			tail = head;
 		}
 
-		list (list<T> &l): _size(0) {
+		list (const list<T> &l): _size(0) {
 			head = new node;
 			tail = head;
 
-			for (auto &it : l)
+			for (const auto &it : l)
 				push_back(it);
 		}
 
@@ -64,6 +64,7 @@ class list {
 		}
 
 		class iterator;
+		class const_iterator;
 
 		iterator begin () {
 			return iterator(head->next);
@@ -71,6 +72,14 @@ class list {
 
 		iterator end () {
 			return iterator(nullptr);
+		}
+
+		const_iterator begin () const {
+			return const_iterator(head->next);
+		}
+
+		const_iterator end () const {
+			return const_iterator(nullptr);
 		}
 
 		inline bool empty () const {
@@ -207,6 +216,37 @@ class list<T>::iterator {
 		}
 
 		iterator &operator++ () {
+			ptr = ptr->next;
+			return *this;
+		}
+};
+
+template <typename T>
+class list<T>::const_iterator {
+	const node *ptr;
+
+	public:
+		const_iterator (const node *it = nullptr): ptr(it) {} // nullptr = default parameter
+
+		node *operator= (const node *rhs) {
+			ptr = rhs;
+			return ptr;
+		}
+
+		inline bool operator!= (const const_iterator rhs) const {
+			return !(ptr == rhs.ptr);
+		}
+
+		inline const T &operator* () const {
+			return ptr->data;
+		}
+
+		const_iterator &operator++ (int) {
+			ptr = ptr->next;
+			return *this;
+		}
+
+		const_iterator &operator++ () {
 			ptr = ptr->next;
 			return *this;
 		}

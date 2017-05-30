@@ -3,7 +3,8 @@
 
 #include "algorithm.hpp"
 #include "utility.hpp"
-#include "list_stack_queue.hpp"
+#include "list.hpp"
+#include "queue.hpp"
 #include "heap.hpp"
 
 #define inf 2147483647
