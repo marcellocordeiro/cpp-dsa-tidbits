@@ -20,18 +20,18 @@ class bst {
 			return root;
 		}
 
-		/*void printInOrder (node *root) {
+		/*void print_in_order (node *root) {
 			if (root == nullptr)
 				return;
 
-			printInOrder(root->left);
+			print_in_order(root->left);
 			cout << "[" << root->data << "] ";
-			printInOrder(root->right);
+			print_in_order(root->right);
 
 			return;
 		}*/
 
-		T height (node *root) const {
+		T height (const node *root) const {
 			T l, r;
 
 			if (root == nullptr)
@@ -43,7 +43,7 @@ class bst {
 			return l > r ? (l + 1):(r + 1);
 		}
 
-		bool search (node *root, T value) const {
+		bool search (const node *root, const T value) const {
 			if (root == nullptr)
 				return false;
 
@@ -56,14 +56,14 @@ class bst {
 				return search(root->right, value);
 		}
 
-		node *findMin (node *root) const {
+		node *find_min (const node *root) const {
 			if (root->left == nullptr)
 				return root;
 			else
-				return findMin(root->left);
+				return find_min(root->left);
 		}
 
-		node *remove (node *root, int value) {
+		node *remove (node *root, const T value) {
 			if (root == nullptr)
 				return nullptr;
 
@@ -85,7 +85,7 @@ class bst {
 					
 					return temp;
 				} else {
-					node *temp = findMin(root->right);
+					node *temp = find_min(root->right);
 					root->data = temp->data;
 					root->right = remove(root->right, temp->data);
 				}
@@ -94,12 +94,12 @@ class bst {
 			return root;
 		}
 
-		void deleteTree (node *root) {
+		void delete_tree (node *root) {
 			if (root == nullptr)
 				return;
 
-			deleteTree(root->left);
-			deleteTree(root->right);
+			delete_tree(root->left);
+			delete_tree(root->right);
 
 			if (root->left != nullptr)
 				delete root->left;
@@ -112,11 +112,11 @@ class bst {
 		bst (): root(nullptr) {}
 
 		~bst () {
-			deleteTree(root);
+			delete_tree(root);
 		}
 
 		/*void print () {
-			printInOrder(root);
+			print_in_order(root);
 			cout << "\n";
 		}*/
 
@@ -124,15 +124,15 @@ class bst {
 			return height(root);
 		}
 
-		inline bool search (T value) const {
+		inline bool search (const T value) const {
 			return search(root, value);
 		}
 
-		inline void insert (T value) {
+		inline void insert (const T value) {
 			root = insert(root, value);
 		}
 
-		inline void remove (T value) {
+		inline void remove (const T value) {
 			root = remove(root, value);
 		}
 };
@@ -143,9 +143,9 @@ struct bst<T>::node {
 	node *left;
 	node *right;
 
-	node (T value): data(value), left(nullptr), right(nullptr) {}
+	node (const T value): data(value), left(nullptr), right(nullptr) {}
 
-	node (T value, node *left, node *right): data(value), left(left), right(right) {}
+	node (const T value, node *left, node *right): data(value), left(left), right(right) {}
 };
 
 #endif

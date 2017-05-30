@@ -6,9 +6,12 @@
 #include "lib/utility.hpp"
 #include "lib/vector.hpp"
 #include "lib/bst.hpp"
-#include "lib/list_stack_queue.hpp"
+#include "lib/list.hpp"
+#include "lib/stack.hpp"
+#include "lib/queue.hpp"
 #include "lib/heap.hpp"
 #include "lib/graph.hpp"
+#include "lib/union_find.hpp"
 
 void vectorTest () {
 	vector<int> a, b;
@@ -214,9 +217,9 @@ int main () {
 	//listTest();
 	//queueTest();
 	//heapTest();
-	vectorTest();
+	//vectorTest();
 	//pairTest();
-	//bstTest();
+	bstTest();
 	//graphTest();
 
 
