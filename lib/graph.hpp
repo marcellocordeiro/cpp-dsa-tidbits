@@ -46,10 +46,9 @@ class graph {
 		void bfs (int);
 		void bfs_visit (int, vector<bool>&);
 
-		int shortest_path (int, int);
-		void shortest_path (int, vector<int>&, vector<int>&);
+		pair<vector<int>, vector<int>> shortest_path (int);
 
-		void dijkstra (int);
+		pair<vector<int>, vector<int>> dijkstra (int);
 
 		friend std::ostream& operator<< (std::ostream &os, graph &g) {
 			for (int i = 0; i < g.size(); i++) {
@@ -120,7 +119,6 @@ void graph::bfs_visit (int s, vector<bool> &P) {
 		q.pop();
 
 		// pre_visit(u);
-		std::cout << "visiting " << u << std::endl;
 
 		for (auto it : G[u]) {
 			int v = it.first;
@@ -136,15 +134,9 @@ void graph::bfs_visit (int s, vector<bool> &P) {
 	}
 }
 
-int graph::shortest_path (int A, int B) {
+pair<vector<int>, vector<int>> graph::shortest_path (int s) {
 	vector<int> D(_size, inf), F(_size, -1); // D = shortest distance from A to B, F = path
 
-	graph::shortest_path(A, D, F);
-
-	return D[B];
-}
-
-void graph::shortest_path (int s, vector<int> &D, vector<int> &F) {
 	D[s] = 0;
 
 	queue<int> q;
@@ -165,10 +157,12 @@ void graph::shortest_path (int s, vector<int> &D, vector<int> &F) {
 			}
 		}
 	}
+
+	return make_pair(D, F);
 }
 
-void graph::dijkstra (int s) {
-	vector<int> D(_size, inf), F(_size, -1);
+pair<vector<int>, vector<int>> graph::dijkstra (int s) {
+	vector<int> D(_size, inf), F(_size, -1); // D = shortest distance from A to B, F = path
 	priority_queue<pair<int, int>, less<pair<int, int>>> pq;
 
 	D[0] = 0;
@@ -188,9 +182,7 @@ void graph::dijkstra (int s) {
 		}
 	}
 
-	for (auto it : D)
-		std::cout << it << ' ';
-	std::cout << std::endl;
+	return make_pair(D, F);
 }
 
 #endif
