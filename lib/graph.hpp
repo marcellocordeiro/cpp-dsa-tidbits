@@ -26,12 +26,13 @@ class graph {
 			return _size;
 		}
 
-		void addEdge (pair<int, int> edge) {
-			G[edge.first].push_back(make_pair(edge.second, 1));
-		}
+		//void addEdge (pair<int, int> edge) {
+		//	G[edge.first].push_back(make_pair(edge.second, 1));
+		//}
 
-		void addEdge (pair<int, int> edge,  int weight) {
+		void addEdge (pair<int, int> edge, int weight) {
 			G[edge.first].push_back(make_pair(edge.second, weight));
+			G[edge.second].push_back(make_pair(edge.first, weight));
 		}
 
 		vector<pair<int, int>> &operator[] (int i) {
@@ -49,6 +50,8 @@ class graph {
 		pair<vector<int>, vector<int>> shortest_path (int);
 
 		pair<vector<int>, vector<int>> dijkstra (int);
+
+		void prim (int);
 
 		friend std::ostream& operator<< (std::ostream &os, graph &g) {
 			for (int i = 0; i < g.size(); i++) {
@@ -163,7 +166,7 @@ pair<vector<int>, vector<int>> graph::shortest_path (int s) {
 
 pair<vector<int>, vector<int>> graph::dijkstra (int s) {
 	vector<int> D(_size, inf), F(_size, -1); // D = shortest distance from A to B, F = path
-	priority_queue<pair<int, int>, less<pair<int, int>>> pq;
+	/*priority_queue<pair<int, int>, less<pair<int, int>>> pq;
 
 	D[0] = 0;
 	pq.push(make_pair(D[s], s)); // pair.first é a chave de comparação
@@ -180,9 +183,43 @@ pair<vector<int>, vector<int>> graph::dijkstra (int s) {
 				pq.push(make_pair(D[it.first], it.first)); // update??
 			}
 		}
-	}
+	}*/
 
 	return make_pair(D, F);
+}
+
+void graph::prim (int s) {
+	//graph T(_size);
+	vector<int> W(_size, inf), F(_size, -1);
+	vector<bool> S(_size, false);
+
+	W[s] = 0;
+
+	priority_queue<pair<int, int>, less<pair<int, int>>> pq;
+	pq.push(make_pair(W[s], s));
+
+	while (!pq.empty()) {
+		int u = pq.top().second;
+		pq.pop();
+
+		S[u] = true;
+
+		for (auto it : G[u]) {
+			int v = it.first;
+			int w = it.second;
+
+			if (S[v] == false && W[v] > w) {
+				W[v] = w;
+				pq.push(make_pair(W[v], v));
+				F[v] = u;
+			}
+		}
+	}
+
+	for (unsigned int i = 1; i < F.size(); i++)
+		std::cout << F[i] << " - " << i << std::endl;
+
+	//return make_pair(T, 0);
 }
 
 #endif
