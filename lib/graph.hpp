@@ -26,7 +26,7 @@ class graph {
 			return _size;
 		}
 
-		void addEdge (pair<int, int> edge, int weight = 1) {
+		void add_edge (pair<int, int> edge, int weight = 1) {
 			G[edge.first].push_back(make_pair(edge.second, weight));
 			G[edge.second].push_back(make_pair(edge.first, weight));
 		}

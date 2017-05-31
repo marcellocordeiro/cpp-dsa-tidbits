@@ -186,20 +186,20 @@ void pairTest () {
 void graphTest () {
 	graph G(9);
 
-	G.addEdge(make_pair(0, 1), 4);
-	G.addEdge(make_pair(0, 7), 8);
-	G.addEdge(make_pair(1, 2), 8);
-	G.addEdge(make_pair(1, 7), 11);
-	G.addEdge(make_pair(2, 3), 7);
-	G.addEdge(make_pair(2, 8), 2);
-	G.addEdge(make_pair(2, 5), 4);
-	G.addEdge(make_pair(3, 4), 9);
-	G.addEdge(make_pair(3, 5), 14);
-	G.addEdge(make_pair(4, 5), 10);
-	G.addEdge(make_pair(5, 6), 2);
-	G.addEdge(make_pair(6, 7), 1);
-	G.addEdge(make_pair(6, 8), 6);
-	G.addEdge(make_pair(7, 8), 7);
+	G.add_edge(make_pair(0, 1), 4);
+	G.add_edge(make_pair(0, 7), 8);
+	G.add_edge(make_pair(1, 2), 8);
+	G.add_edge(make_pair(1, 7), 11);
+	G.add_edge(make_pair(2, 3), 7);
+	G.add_edge(make_pair(2, 8), 2);
+	G.add_edge(make_pair(2, 5), 4);
+	G.add_edge(make_pair(3, 4), 9);
+	G.add_edge(make_pair(3, 5), 14);
+	G.add_edge(make_pair(4, 5), 10);
+	G.add_edge(make_pair(5, 6), 2);
+	G.add_edge(make_pair(6, 7), 1);
+	G.add_edge(make_pair(6, 8), 6);
+	G.add_edge(make_pair(7, 8), 7);
 	std::cout << G;
 	//G.bfs(2);
 	//std::cout << std::endl;
