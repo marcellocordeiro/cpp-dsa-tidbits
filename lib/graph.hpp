@@ -3,19 +3,19 @@
 
 #include "algorithm.hpp"
 #include "utility.hpp"
-#include "list.hpp"
+#include "vector.hpp"
 #include "queue.hpp"
 #include "heap.hpp"
 
 #define inf 2147483647
 
 class graph {
-	list<pair<int, int>> *G;
+	vector<pair<int, int>> *G;
 	int _size;
 
 	public:
 		graph (int V): _size(V) {
-			G = new list<pair<int, int>>[_size];
+			G = new vector<pair<int, int>>[_size];
 		}
 
 		~graph () {
@@ -27,16 +27,14 @@ class graph {
 		}
 
 		void addEdge (pair<int, int> edge) {
-			G[edge.first].push_back({edge.second, 1});
-			G[edge.second].push_back({edge.first, 1}); // não dirigido
+			G[edge.first].push_back(make_pair(edge.second, 1));
 		}
 
 		void addEdge (pair<int, int> edge,  int weight) {
-			G[edge.first].push_back({edge.second, weight});
-			G[edge.second].push_back({edge.first, weight}); // não dirigido
+			G[edge.first].push_back(make_pair(edge.second, weight));
 		}
 
-		list<pair<int, int>> &operator[] (int i) {
+		vector<pair<int, int>> &operator[] (int i) {
 			return G[i];
 		}
 
@@ -49,7 +47,7 @@ class graph {
 		void bfs_visit (int, vector<bool>&);
 
 		int shortest_path (int, int);
-		void shortest_path (int, int, vector<int>&);
+		void shortest_path (int, vector<int>&, vector<int>&);
 
 		void dijkstra (int);
 
@@ -139,14 +137,14 @@ void graph::bfs_visit (int s, vector<bool> &P) {
 }
 
 int graph::shortest_path (int A, int B) {
-	vector<int> D(_size, inf);
+	vector<int> D(_size, inf), F(_size, -1); // D = shortest distance from A to B, F = path
 
-	graph::shortest_path(A, B, D);
+	graph::shortest_path(A, D, F);
 
 	return D[B];
 }
 
-void graph::shortest_path (int s, int d, vector<int> &D) {
+void graph::shortest_path (int s, vector<int> &D, vector<int> &F) {
 	D[s] = 0;
 
 	queue<int> q;
@@ -161,9 +159,7 @@ void graph::shortest_path (int s, int d, vector<int> &D) {
 
 			if (D[v] == -1) {
 				D[v] = D[u] + 1;
-
-				if (v == d)
-					return;
+				F[v] = u;
 
 				q.push(v);
 			}

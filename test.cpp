@@ -200,12 +200,13 @@ void graphTest () {
 	G.addEdge(make_pair(6, 7), 1);
 	G.addEdge(make_pair(6, 8), 6);
 	G.addEdge(make_pair(7, 8), 7);
+	std::cout << G;
 	//G.bfs(2);
 	//std::cout << std::endl;
 	//G.dfs(2);
 
 	//pair<vector<int>, vector<int>> dists = 
-	G.dijkstra(0);
+//	G.dijkstra(0);
 
 	//for (int i = 0; i < dists.first.size(); i++)
 	//	std::cout << (dists.first[i]) << ' ';
@@ -219,8 +220,8 @@ int main () {
 	//heapTest();
 	//vectorTest();
 	//pairTest();
-	bstTest();
-	//graphTest();
+	//bstTest();
+	graphTest();
 
 
 	//heap<pair<int, int>, less> h;
