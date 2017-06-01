@@ -1,8 +1,8 @@
 #ifndef __heap_hpp_included__
 #define __heap_hpp_included__
 
-//#include "algorithm.hpp"
-//#include "vector.hpp"
+#include "algorithm.hpp"
+#include "vector.hpp"
 
 // heap de altura h <==> array de comprimento 2^h
 	// raiz na posição 0
