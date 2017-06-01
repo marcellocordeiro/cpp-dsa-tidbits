@@ -1,8 +1,8 @@
 #ifndef __heap_hpp_included__
 #define __heap_hpp_included__
 
-#include "algorithm.hpp"
-#include "vector.hpp"
+//#include "algorithm.hpp"
+//#include "vector.hpp"
 
 // heap de altura h <==> array de comprimento 2^h
 	// raiz na posição 0
@@ -33,17 +33,17 @@ class priority_queue {						   // default from stl is greater?
 		}
 
 		void bubble_up () {
-			for (size_type i = H.size() - 1; (i > 0) && (cmp(H[i], H[parent(i)])); i = parent(i))
-				swap(H[i], H[parent(i)]);
+			for (size_type i = H.size() - 1; (i > 0) && (cmp(H[parent(i)], H[i])); i = parent(i))
+				swap(H[parent(i)], H[i]);
 		}
 
 		void heapify (size_type i) {
 			size_type l = left(i), r = right(i), m = i;
 
-			if (l < H.size() && cmp(H[l], H[m]))
+			if (l < H.size() && cmp(H[m], H[l]))
 				m = l;
 
-			if (r < H.size() && cmp(H[r], H[m]))
+			if (r < H.size() && cmp(H[m], H[r]))
 				m = r;
 
 			if (m != i) {
