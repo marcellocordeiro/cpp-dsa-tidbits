@@ -47,14 +47,14 @@ class graph {
 
 		pair<vector<int>, vector<int>> dijkstra (int);
 
-		void prim (int);
+		pair<vector<int>, vector<int>> prim (int);
 
 		friend std::ostream& operator<< (std::ostream &os, graph &g) {
 			for (int i = 0; i < g.size(); i++) {
 				os << "===G[" << i << "]===" << std::endl;
 
 				for (auto it : g[i])
-					os << it.first << ' ';
+					os << it.first << "(" << it.second << ")" << ' ';
 				os << std::endl;
 			}
 
@@ -162,7 +162,7 @@ pair<vector<int>, vector<int>> graph::shortest_path (int s) {
 
 pair<vector<int>, vector<int>> graph::dijkstra (int s) {
 	vector<int> D(_size, inf), F(_size, -1); // D = shortest distance from A to B, F = path
-	/*priority_queue<pair<int, int>, less<pair<int, int>>> pq;
+	priority_queue<pair<int, int>, less<pair<int, int>>> pq;
 
 	D[0] = 0;
 	pq.push(make_pair(D[s], s)); // pair.first é a chave de comparação
@@ -179,13 +179,12 @@ pair<vector<int>, vector<int>> graph::dijkstra (int s) {
 				pq.push(make_pair(D[it.first], it.first)); // update??
 			}
 		}
-	}*/
+	}
 
 	return make_pair(D, F);
 }
 
-void graph::prim (int s) {
-	//graph T(_size);
+pair<vector<int>, vector<int>> graph::prim (int s) {
 	vector<int> W(_size, inf), F(_size, -1);
 	vector<bool> S(_size, false);
 
@@ -207,15 +206,19 @@ void graph::prim (int s) {
 			if (S[v] == false && W[v] > w) {
 				W[v] = w;
 				pq.push(make_pair(W[v], v));
+				
 				F[v] = u;
 			}
 		}
 	}
 
-	for (unsigned int i = 1; i < F.size(); i++)
-		std::cout << F[i] << " - " << i << std::endl;
+	/*graph T(V);
 
-	//return make_pair(T, 0);
+	for (int i = 0; i < _size; i++)
+		if (fw.first[i] != -1)
+			T.add_edge(make_pair(i, fw.first[i]), fw.second[i]);*/
+
+	return make_pair(F, W);
 }
 
 #endif

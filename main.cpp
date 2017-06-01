@@ -40,25 +40,52 @@ int main () {
 	//std::cout << G;*/
 
 	int V = 9;
-    graph g(V);
+	graph g(V);
  
-    //  making above shown graph
-    g.add_edge(make_pair(0, 1), 4);
-    g.add_edge(make_pair(0, 7), 8);
-    g.add_edge(make_pair(1, 2), 8);
-    g.add_edge(make_pair(1, 7), 11);
-    g.add_edge(make_pair(2, 3), 7);
-    g.add_edge(make_pair(2, 8), 2);
-    g.add_edge(make_pair(2, 5), 4);
-    g.add_edge(make_pair(3, 4), 9);
-    g.add_edge(make_pair(3, 5), 14);
-    g.add_edge(make_pair(4, 5), 10);
-    g.add_edge(make_pair(5, 6), 2);
-    g.add_edge(make_pair(6, 7), 1);
-    g.add_edge(make_pair(6, 8), 6);
-    g.add_edge(make_pair(7, 8), 7);
+	//  making above shown graph
+	g.add_edge(make_pair(0, 1), 4);
+	g.add_edge(make_pair(0, 7), 8);
+	g.add_edge(make_pair(1, 2), 8);
+	g.add_edge(make_pair(1, 7), 11);
+	g.add_edge(make_pair(2, 3), 7);
+	g.add_edge(make_pair(2, 8), 2);
+	g.add_edge(make_pair(2, 5), 4);
+	g.add_edge(make_pair(3, 4), 9);
+	g.add_edge(make_pair(3, 5), 14);
+	g.add_edge(make_pair(4, 5), 10);
+	g.add_edge(make_pair(5, 6), 2);
+	g.add_edge(make_pair(6, 7), 1);
+	g.add_edge(make_pair(6, 8), 6);
+	g.add_edge(make_pair(7, 8), 7);
 
-    g.prim(0);
+	auto fw = g.prim(0);
+
+	//for (unsigned int i = 1; i < fw.first.size(); i++)
+	//	std::cout << fw.first[i] << " - " << i << std::endl;
+
+
+	graph T(V);
+
+	/*for (auto it : fw.first)
+		std::cout << it << ' ';
+	std::cout << std::endl;
+
+	for (auto it : fw.second)
+		std::cout << it << ' ';
+	std::cout << std::endl;*/
+
+	for (int i = 0; i < 9; i++)
+		if (fw.first[i] != -1)
+			T.add_edge(make_pair(i, fw.first[i]), fw.second[i]);
+
+	//std::cout << g;
+
+	//std::cout << std::endl;
+
+	std::cout << T;
+
+
+
 
 	return 0;
 }
