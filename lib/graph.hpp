@@ -164,7 +164,7 @@ pair<vector<int>, vector<int>> graph::dijkstra (int s) {
 	vector<int> D(_size, inf), F(_size, -1); // D = shortest distance from A to B, F = path
 	priority_queue<pair<int, int>, less<pair<int, int>>> pq;
 
-	D[0] = 0;
+	D[s] = 0;
 	pq.push(make_pair(D[s], s)); // pair.first é a chave de comparação
 
 	while (!pq.empty()) {
