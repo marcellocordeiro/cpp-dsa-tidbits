@@ -53,7 +53,7 @@ class graph {
 			for (int i = 0; i < g.size(); i++) {
 				os << "===G[" << i << "]===" << std::endl;
 
-				for (auto it : g[i])
+				for (const auto &it : g[i])
 					os << it.first << "(" << it.second << ")" << ' ';
 				os << std::endl;
 			}
@@ -82,7 +82,7 @@ void graph::dfs_visit (int s, vector<bool> &P) {
 	// pre_visit(s);
 	std::cout << "visiting " << s << std::endl;
 
-	for (auto it : G[s]) {
+	for (const auto &it : G[s]) {
 		int v = it.first;
 
 		if (P[v] == false)
@@ -119,7 +119,7 @@ void graph::bfs_visit (int s, vector<bool> &P) {
 
 		// pre_visit(u);
 
-		for (auto it : G[u]) {
+		for (const auto &it : G[u]) {
 			int v = it.first;
 
 			if (P[v] == false) {
@@ -145,7 +145,7 @@ pair<vector<int>, vector<int>> graph::shortest_path (int s) {
 		int u = q.front();
 		q.pop();
 
-		for (auto it : G[u]) {
+		for (const auto &it : G[u]) {
 			int v = it.first;
 
 			if (D[v] == -1) {
@@ -171,7 +171,7 @@ pair<vector<int>, vector<int>> graph::dijkstra (int s) {
 		int u = pq.top().second;
 		pq.pop();
 
-		for (auto it : G[u]) {
+		for (const auto &it : G[u]) {
 			if (D[u] + it.second < D[it.first]) {
 				D[it.first] = D[u] + it.second;
 				F[it.first] = u;
@@ -199,7 +199,7 @@ pair<vector<int>, vector<int>> graph::prim (int s) {
 
 		S[u] = true;
 
-		for (auto it : G[u]) {
+		for (const auto &it : G[u]) {
 			int v = it.first;
 			int w = it.second;
 
