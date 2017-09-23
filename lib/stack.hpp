@@ -1,30 +1,27 @@
-#ifndef __stack_hpp_included__
-#define __stack_hpp_included__
+#pragma once
 
 #include "list.hpp"
 
 template <typename T>
 class stack: private list<T> {
-	public:
-		inline bool empty () const {
-			return list<T>::empty();
-		}
+  public:
+    inline bool empty () const {
+        return list<T>::empty();
+    }
 
-		inline typename list<T>::size_type size () const {
-			return list<T>::size();
-		}
+    inline typename list<T>::size_type size () const {
+        return list<T>::size();
+    }
 
-		inline T top () const {
-			return list<T>::front();
-		}
+    inline T top () const {
+        return list<T>::front();
+    }
 
-		inline void push (const T value) {
-			list<T>::push_front(value);
-		}
+    inline void push (const T value) {
+        list<T>::push_front(value);
+    }
 
-		inline void pop () {
-			list<T>::pop_front();
-		}
+    inline void pop () {
+        list<T>::pop_front();
+    }
 };
-
-#endif

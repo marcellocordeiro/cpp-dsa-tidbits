@@ -1,6 +1,3 @@
-#ifndef __utility_hpp_included__
-#define __utility_hpp_included__
+#pragma once
 
 #include "pair.hpp"
-
-#endif

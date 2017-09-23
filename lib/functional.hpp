@@ -1,18 +1,15 @@
-#ifndef __functional_hpp_included__
-#define __functional_hpp_included__
+#pragma once
 
 template <typename T>
 struct less {
-	bool operator() (const T &x, const T &y) const {
-		return x < y;
-	}
+    bool operator() (const T &x, const T &y) const {
+        return x < y;
+    }
 };
 
 template <typename T>
 struct greater {
-	bool operator() (const T &x, const T &y) const {
-		return x > y;
-	}
+    bool operator() (const T &x, const T &y) const {
+        return x > y;
+    }
 };
-
-#endif
