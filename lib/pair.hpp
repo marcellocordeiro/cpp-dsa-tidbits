@@ -2,29 +2,29 @@
 
 template <typename T1, typename T2>
 struct pair {
-    T1 first;
-    T2 second;
+  T1 first;
+  T2 second;
 
-    pair () {}
+  pair () {}
 
-    pair (T1 first, T2 second) : first(first), second(second) {}
+  pair (T1 first, T2 second) : first(first), second(second) {}
 
-    inline bool operator< (const pair<T1, T2> &rhs) const {
-        return first < rhs.first || (!(rhs.first < first) && second < rhs.second);
-    }
+  inline bool operator< (const pair<T1, T2> &rhs) const {
+    return first < rhs.first || (!(rhs.first < first) && second < rhs.second);
+  }
 
-    inline bool operator> (const pair<T1, T2> &rhs) const {
-        return !(rhs < (*this));
-    }
+  inline bool operator> (const pair<T1, T2> &rhs) const {
+    return !(rhs < (*this));
+  }
 
-    friend std::ostream& operator<< (std::ostream &os, pair<T1, T2> &p) {
-        os << '(' << p.first << ", " << p.second << ')';
+  friend std::ostream& operator<< (std::ostream &os, pair<T1, T2> &p) {
+    os << '(' << p.first << ", " << p.second << ')';
 
-        return os;
-    }
+    return os;
+  }
 };
 
 template <typename T1, typename T2>
 pair<T1, T2> make_pair (T1 first, T2 second) {
-    return pair<T1, T2>(first, second);
+  return pair<T1, T2>(first, second);
 }

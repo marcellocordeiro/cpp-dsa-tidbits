@@ -2,147 +2,155 @@
 
 template <typename T>
 class bst {
-    struct node;
+  struct node;
+  node *root;
 
-    node *root;
-
-  private:
-    node *insert (node *root, T value) {
-        if (root == nullptr)
-            return new node(value);
-
-        if (root->data > value)
-            root->left = insert(root->left, value);
-        else if (root->data < value)
-            root->right = insert(root->right, value);
-
-        return root;
+private:
+  node *insert (node *root, T value) {
+    if (root == nullptr) {
+      return new node(value);
     }
 
-    /*void print_in_order (node *root) {
-        if (root == nullptr)
-            return;
-
-        print_in_order(root->left);
-        cout << "[" << root->data << "] ";
-        print_in_order(root->right);
-
-        return;
-    }*/
-
-    T height (const node *root) const {
-        T l, r;
-
-        if (root == nullptr)
-            return 0;
-
-        l = height(root->left);
-        r = height(root->right);
-
-        return l > r ? (l + 1):(r + 1);
+    if (root->data > value) {
+      root->left = insert(root->left, value);
+    } else if (root->data < value) {
+      root->right = insert(root->right, value);
     }
 
-    bool search (const node *root, const T value) const {
-        if (root == nullptr)
-            return false;
+    return root;
+  }
 
-        if (root->data == value)
-            return true;
+  /*void print_in_order (node *root) {
+    if (root == nullptr)
+      return;
 
-        if (root->data > value)
-            return search(root->left, value);
-        else
-            return search(root->right, value);
+    print_in_order(root->left);
+    cout << "[" << root->data << "] ";
+    print_in_order(root->right);
+
+    return;
+  }*/
+
+  T height (const node *root) const {
+    T l, r;
+
+    if (root == nullptr) {
+      return 0;
     }
 
-    node *find_min (const node *root) const {
-        if (root->left == nullptr)
-            return root;
-        else
-            return find_min(root->left);
+    l = height(root->left);
+    r = height(root->right);
+
+    return l > r ? (l + 1):(r + 1);
+  }
+
+  bool search (const node *root, const T value) const {
+    if (root == nullptr) {
+      return false;
     }
 
-    node *remove (node *root, const T value) {
-        if (root == nullptr)
-            return nullptr;
+    if (root->data > value) {
+      return search(root->left, value);
+    } else if (root->data < value) {
+      return search(root->right, value);
+    } else {
+      return true;
+    }
+  }
 
-        if (value < root->data) {
-            root->left = remove(root->left, value);
-        } else if (value > root->data) {
-            root->right = remove(root->right, value);
-        } else { //value == root->data
-            if (root->left == nullptr) {
-                node *temp = root->right;
+  node *find_min (const node *root) const {
+    if (root->left == nullptr) {
+      return root;
+    } else {
+      return find_min(root->left);
+    }
+  }
 
-                delete root;
-                
-                return temp;
-            } else if (root->right == nullptr) {
-                node *temp = root->left;
-
-                delete root;
-                
-                return temp;
-            } else {
-                node *temp = find_min(root->right);
-                root->data = temp->data;
-                root->right = remove(root->right, temp->data);
-            }
-        }
-
-        return root;
+  node *remove (node *root, const T value) {
+    if (root == nullptr) {
+      return nullptr;
     }
 
-    void delete_tree (node *root) {
-        if (root == nullptr)
-            return;
+    if (value < root->data) {
+      root->left = remove(root->left, value);
+    } else if (value > root->data) {
+      root->right = remove(root->right, value);
+    } else { //value == root->data
+      if (root->left == nullptr) {
+        node *temp = root->right;
 
-        delete_tree(root->left);
-        delete_tree(root->right);
+        delete root;
+        
+        return temp;
+      } else if (root->right == nullptr) {
+        node *temp = root->left;
 
-        if (root->left != nullptr)
-            delete root->left;
-
-        if (root->right != nullptr)
-            delete root->right;
+        delete root;
+        
+        return temp;
+      } else {
+        node *temp = find_min(root->right);
+        root->data = temp->data;
+        root->right = remove(root->right, temp->data);
+      }
     }
 
-  public:
-    bst () : root(nullptr) {}
+    return root;
+  }
 
-    ~bst () {
-        delete_tree(root);
+  void delete_tree (node *root) {
+    if (root == nullptr) {
+      return;
     }
 
-    /*void print () {
-        print_in_order(root);
-        cout << "\n";
-    }*/
+    delete_tree(root->left);
+    delete_tree(root->right);
 
-    inline T height () const {
-        return height(root);
+    if (root->left != nullptr) {
+      delete root->left;
     }
 
-    inline bool search (const T value) const {
-        return search(root, value);
+    if (root->right != nullptr) {
+      delete root->right;
     }
+  }
 
-    inline void insert (const T value) {
-        root = insert(root, value);
-    }
+public:
+  bst () : root(nullptr) {}
 
-    inline void remove (const T value) {
-        root = remove(root, value);
-    }
+  ~bst () {
+    delete_tree(root);
+  }
+
+  /*void print () {
+    print_in_order(root);
+    cout << "\n";
+  }*/
+
+  inline T height () const {
+    return height(root);
+  }
+
+  inline bool search (const T value) const {
+    return search(root, value);
+  }
+
+  inline void insert (const T value) {
+    root = insert(root, value);
+  }
+
+  inline void remove (const T value) {
+    root = remove(root, value);
+  }
 };
 
 template <typename T>
 struct bst<T>::node {
-    T data;
-    node *left;
-    node *right;
+  T data;
+  node *left;
+  node *right;
 
-    node (const T value) : data(value), left(nullptr), right(nullptr) {}
+  node (const T value) : data(value), left(nullptr), right(nullptr) {}
 
-    node (const T value, node *left, node *right) : data(value), left(left), right(right) {}
+  node (const T value, node *left, node *right) : data(value), left(left), right(right) {}
 };
