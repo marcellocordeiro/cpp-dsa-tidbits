@@ -6,33 +6,16 @@
 #include "queue.hpp"
 #include "heap.hpp"
 
-#define inf 2147483647
+#define INF 2147483647
 
 class graph {
-  vector<pair<int, int>> *G;
-  int _size;
-
 public:
-  graph (int V) : _size(V) {
-    G = new vector<pair<int, int>>[_size];
-  }
+  graph (int);
+  ~graph ();
+  int size ();
+  void add_edge (pair<int, int>, int);
 
-  ~graph () {
-    delete[] G;
-  }
-
-  int size () {
-    return _size;
-  }
-
-  void add_edge (pair<int, int> edge, int weight = 1) {
-    G[edge.first].push_back(make_pair(edge.second, weight));
-    G[edge.second].push_back(make_pair(edge.first, weight));
-  }
-
-  vector<pair<int, int>> &operator[] (int i) {
-    return G[i];
-  }
+  vector<pair<int, int>>& operator[] (int);
 
   void dfs ();
   void dfs (int);
@@ -43,24 +26,34 @@ public:
   void bfs_visit (int, vector<bool>&);
 
   pair<vector<int>, vector<int>> shortest_path (int);
-
   pair<vector<int>, vector<int>> dijkstra (int);
-
   pair<vector<int>, vector<int>> prim (int);
 
-  friend std::ostream& operator<< (std::ostream &os, graph &g) {
-    for (int i = 0; i < g.size(); i++) {
-      os << "===G[" << i << "]===" << std::endl;
-
-      for (const auto &it : g[i]) {
-        os << it.first << "(" << it.second << ")" << ' ';
-      }
-      os << std::endl;
-    }
-
-    return os;
-  }
+private:
+  vector<pair<int, int>> *G;
+  int _size;
 };
+
+graph::graph (int V) : _size(V) {
+  G = new vector<pair<int, int>>[_size];
+}
+
+graph::~graph () {
+  delete[] G;
+}
+
+int graph::size () {
+  return _size;
+}
+
+void graph::add_edge (pair<int, int> edge, int weight = 1) {
+  G[edge.first].push_back({edge.second, weight});
+  G[edge.second].push_back({edge.first, weight});
+}
+
+vector<pair<int, int>>& graph::operator[] (int i) {
+  return G[i];
+}
 
 void graph::dfs () { // all vertices
   vector<bool> P(_size, false);
@@ -139,7 +132,7 @@ void graph::bfs_visit (int s, vector<bool> &P) {
 }
 
 pair<vector<int>, vector<int>> graph::shortest_path (int s) {
-  vector<int> D(_size, inf), F(_size, -1); // D = shortest distance from A to B, F = path
+  vector<int> D(_size, INF), F(_size, -1); // D = shortest distance from A to B, F = path
 
   D[s] = 0;
 
@@ -153,7 +146,7 @@ pair<vector<int>, vector<int>> graph::shortest_path (int s) {
     for (const auto &it : G[u]) {
       int v = it.first;
 
-      if (D[v] == -1) {
+      if (D[v] == INF) {
         D[v] = D[u] + 1;
         F[v] = u;
 
@@ -162,41 +155,46 @@ pair<vector<int>, vector<int>> graph::shortest_path (int s) {
     }
   }
 
-  return make_pair(D, F);
+  return {D, F};
 }
 
 pair<vector<int>, vector<int>> graph::dijkstra (int s) {
-  vector<int> D(_size, inf), F(_size, -1); // D = shortest distance from A to B, F = path
-  priority_queue<pair<int, int>, less<pair<int, int>>> pq;
+  vector<int> D(_size, INF), F(_size, -1); // D = shortest distance from A to B, F = path
+  priority_queue<pair<int, int>, greater<pair<int, int>>> pq;
 
   D[s] = 0;
-  pq.push(make_pair(D[s], s)); // pair.first é a chave de comparação
+  pq.push({D[s], s});
 
   while (!pq.empty()) {
     int u = pq.top().second;
+    int w = pq.top().first;
     pq.pop();
+
+    if (w > D[u]) {
+      continue;
+    }
 
     for (const auto &it : G[u]) {
       if (D[u] + it.second < D[it.first]) {
         D[it.first] = D[u] + it.second;
         F[it.first] = u;
 
-        pq.push(make_pair(D[it.first], it.first)); // update??
+        pq.push({D[it.first], it.first});
       }
     }
   }
 
-  return make_pair(D, F);
+  return {D, F};
 }
 
 pair<vector<int>, vector<int>> graph::prim (int s) {
-  vector<int> W(_size, inf), F(_size, -1);
+  vector<int> W(_size, INF), F(_size, -1);
   vector<bool> S(_size, false);
 
   W[s] = 0;
 
-  priority_queue<pair<int, int>, less<pair<int, int>>> pq;
-  pq.push(make_pair(W[s], s));
+  priority_queue<pair<int, int>, greater<pair<int, int>>> pq;
+  pq.push({W[s], s});
 
   while (!pq.empty()) {
     int u = pq.top().second;
@@ -210,7 +208,7 @@ pair<vector<int>, vector<int>> graph::prim (int s) {
 
       if (S[v] == false && W[v] > w) {
         W[v] = w;
-        pq.push(make_pair(W[v], v));
+        pq.push({W[v], v});
         
         F[v] = u;
       }
@@ -221,7 +219,34 @@ pair<vector<int>, vector<int>> graph::prim (int s) {
 
   for (int i = 0; i < _size; i++)
     if (fw.first[i] != -1)
-      T.add_edge(make_pair(i, fw.first[i]), fw.second[i]);*/
+      T.add_edge({i, fw.first[i]}, fw.second[i]);*/
 
-  return make_pair(F, W);
+  return {F, W};
 }
+
+std::ostream& operator<< (std::ostream &os, graph &G) {
+  for (int i = 0; i < G.size(); i++) {
+    os << "===G[" << i << "]===" << std::endl;
+
+    for (const auto &it : G[i]) {
+      os << it.first << "(" << it.second << ")" << ' ';
+    }
+    os << std::endl;
+  }
+
+  return os;
+}
+
+// Alternative
+/* friend std::ostream& operator<< (std::ostream &os, graph &g) {
+  for (int i = 0; i < g.size(); i++) {
+    os << "===G[" << i << "]===" << std::endl;
+
+    for (const auto &it : g[i]) {
+      os << it.first << "(" << it.second << ")" << ' ';
+    }
+    os << std::endl;
+  }
+
+  return os;
+} */
