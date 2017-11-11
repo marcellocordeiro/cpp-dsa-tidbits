@@ -5,23 +5,23 @@
 template <typename T>
 class stack: private list<T> {
 public:
-  inline bool empty () const {
+  bool empty () const {
     return list<T>::empty();
   }
 
-  inline typename list<T>::size_type size () const {
+  typename list<T>::size_type size () const {
     return list<T>::size();
   }
 
-  inline T top () const {
+  T top () const {
     return list<T>::front();
   }
 
-  inline void push (const T value) {
+  void push (const T value) {
     list<T>::push_front(value);
   }
 
-  inline void pop () {
+  void pop () {
     list<T>::pop_front();
   }
 };
