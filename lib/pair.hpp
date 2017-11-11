@@ -9,18 +9,12 @@ struct pair {
 
   pair (T1 first, T2 second) : first(first), second(second) {}
 
-  inline bool operator< (const pair<T1, T2> &rhs) const {
+  bool operator< (const pair<T1, T2> &rhs) const {
     return first < rhs.first || (!(rhs.first < first) && second < rhs.second);
   }
 
-  inline bool operator> (const pair<T1, T2> &rhs) const {
+  bool operator> (const pair<T1, T2> &rhs) const {
     return !(rhs < (*this));
-  }
-
-  friend std::ostream& operator<< (std::ostream &os, pair<T1, T2> &p) {
-    os << '(' << p.first << ", " << p.second << ')';
-
-    return os;
   }
 };
 
