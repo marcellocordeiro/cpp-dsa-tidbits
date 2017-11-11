@@ -7,19 +7,54 @@ template <typename T, class Compare = less<T>>
 class priority_queue {
   using size_type = unsigned int;
 
-  vector<T> H; // heap.size = H.size()
-  Compare cmp;
+public:
+  priority_queue () {}
+
+  priority_queue (const priority_queue<T> &pq) : H(pq.H), cmp(pq.cmp) {}
+
+  priority_queue (const vector<T> &v) {
+    H = v;
+
+    for (size_type i = H.size()/2; i > 0; i--) {
+      heapify(i - 1);
+    }
+  }
+
+  bool empty () const {
+    return (H.size() == 0);
+  }
+
+  size_type size () const {
+    return H.size();
+  }
+
+  T top () const {
+    return H[0];
+  }
+
+  void push (T value) {
+    H.push_back(value);
+
+    bubble_up();
+  }
+
+  void pop () {
+    H[0] = H.back();
+    H.pop_back();
+
+    heapify(0);
+  }
 
 private:
-  inline size_type parent (size_type i) const {
+  size_type parent (const size_type i) const {
     return (i - 1)/2;
   }
 
-  inline size_type left (size_type i) const {
+  size_type left (const size_type i) const {
     return 2*i + 1;
   }
 
-  inline size_type right (size_type i) const {
+  size_type right (const size_type i) const {
     return 2*i + 2;
   }
 
@@ -29,7 +64,7 @@ private:
     }
   }
 
-  void heapify (size_type i) {
+  void heapify (const size_type i) {
     size_type l = left(i), r = right(i), m = i;
 
     if (l < H.size() && cmp(H[m], H[l])) {
@@ -46,41 +81,6 @@ private:
     }
   }
 
-public:
-  priority_queue () {}
-
-  priority_queue (const priority_queue<T> &pq) : H(pq.H), cmp(pq.cmp) {}
-
-  priority_queue (const vector<T> &v) {
-    H = v;
-
-    for (size_type i = H.size()/2; i > 0; i--) {
-      heapify(i - 1);
-    }
-  }
-
-  inline bool empty () const {
-    return (H.size() == 0);
-  }
-
-  inline size_type size () const {
-    return H.size();
-  }
-
-  inline T top () const {
-    return H[0];
-  }
-
-  void push (T value) {
-    H.push_back(value);
-
-    bubble_up();
-  }
-
-  void pop () {
-    H[0] = H.back();
-    H.pop_back();
-
-    heapify(0);
-  }
+  vector<T> H;
+  Compare cmp;
 };
