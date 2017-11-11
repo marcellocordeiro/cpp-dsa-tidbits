@@ -3,10 +3,37 @@
 template <typename T>
 class bst {
   struct node;
-  node *root;
+
+public:
+  bst () : root(nullptr) {}
+
+  ~bst () {
+    delete_tree(root);
+  }
+
+  /*void print () {
+    print_in_order(root);
+    cout << "\n";
+  }*/
+
+  T height () const {
+    return height(root);
+  }
+
+  bool search (const T value) const {
+    return search(root, value);
+  }
+
+  void insert (const T value) {
+    root = insert(root, value);
+  }
+
+  void remove (const T value) {
+    root = remove(root, value);
+  }
 
 private:
-  node *insert (node *root, T value) {
+  node* insert (node *root, const T value) {
     if (root == nullptr) {
       return new node(value);
     }
@@ -58,7 +85,7 @@ private:
     }
   }
 
-  node *find_min (const node *root) const {
+  node* find_min (const node *root) const {
     if (root->left == nullptr) {
       return root;
     } else {
@@ -66,7 +93,7 @@ private:
     }
   }
 
-  node *remove (node *root, const T value) {
+  node* remove (node *root, const T value) {
     if (root == nullptr) {
       return nullptr;
     }
@@ -115,33 +142,7 @@ private:
     }
   }
 
-public:
-  bst () : root(nullptr) {}
-
-  ~bst () {
-    delete_tree(root);
-  }
-
-  /*void print () {
-    print_in_order(root);
-    cout << "\n";
-  }*/
-
-  inline T height () const {
-    return height(root);
-  }
-
-  inline bool search (const T value) const {
-    return search(root, value);
-  }
-
-  inline void insert (const T value) {
-    root = insert(root, value);
-  }
-
-  inline void remove (const T value) {
-    root = remove(root, value);
-  }
+  node *root;
 };
 
 template <typename T>
