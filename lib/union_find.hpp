@@ -1,10 +1,7 @@
 #pragma once
 
 class union_find {
-  int *node;
-  int *height;
-
-  public:
+public:
   union_find (int size) : node(new int[size]), height(new int[size]) { // make_set
     for (int i = 0; i < size; i++) {
       node[i] = i;
@@ -45,4 +42,8 @@ class union_find {
 
     return node[p];
   }
+
+private:
+  int *node;
+  int *height;
 };
