@@ -6,47 +6,6 @@ protected:
   struct node;
   using size_type = unsigned int;
 
-  node *head;
-  node *tail;
-  size_type _size;
-
-private:
-  void erase (node *ptr) {
-    node *temp = ptr;
-
-    if (ptr->next != nullptr) {
-      ptr->next->prev = ptr->prev;
-    }
-
-    ptr->prev->next = ptr->next;
-
-    delete temp;
-
-    _size--;
-  }
-
-  void insert (const T value, node *ptr) {
-    node *temp = new node(value, ptr, ptr->next);
-
-    if (ptr->next != nullptr) {
-      ptr->next->prev = temp;
-    }
-
-    ptr->next = temp;
-
-    _size++;
-  }
-  
-  void delete_list (node *ptr) {
-    if (ptr == nullptr) {
-      return;
-    }
-
-    delete_list(ptr->next);
-
-    delete ptr;
-  }
-
 public:
   list () : _size(0) {
     head = new node;
@@ -159,26 +118,47 @@ public:
     return *this;
   }
 
-  friend std::ostream& operator<< (std::ostream &os, const list<T> &l) {
-    for (auto it = l.head->next; it != nullptr; it = it->next) {
-      if (it->prev == l.head) {
-        os << "(prev: S) ";
-      } else {
-        os << "(prev: " << (it->prev->data) << ") ";
-      }
+private:
+  void erase (node *ptr) {
+    node *temp = ptr;
 
-      os << "(cur: " << (it->data) << ") ";
-
-      if (it->next == nullptr) {
-        os << "(next: N) ";
-      } else {
-        os << "(next: " << (it->next->data) << ") ";
-      }
-      os << std::endl;				
+    if (ptr->next != nullptr) {
+      ptr->next->prev = ptr->prev;
     }
 
-    return os;
+    ptr->prev->next = ptr->next;
+
+    delete temp;
+
+    _size--;
   }
+
+  void insert (const T value, node *ptr) {
+    node *temp = new node(value, ptr, ptr->next);
+
+    if (ptr->next != nullptr) {
+      ptr->next->prev = temp;
+    }
+
+    ptr->next = temp;
+
+    _size++;
+  }
+  
+  void delete_list (node *ptr) {
+    if (ptr == nullptr) {
+      return;
+    }
+
+    delete_list(ptr->next);
+
+    delete ptr;
+  }
+
+protected:
+  node *head;
+  node *tail;
+  size_type _size;
 
   /*
     * todo:
@@ -200,8 +180,6 @@ struct list<T>::node {
 
 template <typename T>
 class list<T>::iterator {
-  node *ptr;
-
 public:
   iterator (node *it = nullptr) : ptr(it) {} // nullptr = default parameter
 
@@ -227,12 +205,13 @@ public:
     ptr = ptr->next;
     return *this;
   }
+
+private:
+  node *ptr;
 };
 
 template <typename T>
 class list<T>::const_iterator {
-  const node *ptr;
-
 public:
   const_iterator (const node *it = nullptr) : ptr(it) {} // nullptr = default parameter
 
@@ -258,4 +237,7 @@ public:
     ptr = ptr->next;
     return *this;
   }
+
+private:
+  const node *ptr;
 };
