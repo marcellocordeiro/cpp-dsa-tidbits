@@ -1,14 +1,14 @@
 #pragma once
 
 template <typename T>
-void merge (vector<T> &v, vector<T> &a, unsigned int l, unsigned int r) {
+void merge(vector<T>& v, vector<T>& a, unsigned int l, unsigned int r) {
   unsigned int i, j, k, m;
 
   for (k = l; k <= r; k++) {
     a[k] = v[k];
   }
 
-  m = (l + r)/2;
+  m = (l + r) / 2;
   i = l;
   j = m + 1;
 
@@ -28,11 +28,11 @@ void merge (vector<T> &v, vector<T> &a, unsigned int l, unsigned int r) {
 }
 
 template <typename T>
-void merge_sort (vector<T> &v, vector<T> &a, unsigned int l, unsigned int r) {
+void merge_sort(vector<T>& v, vector<T>& a, unsigned int l, unsigned int r) {
   if (l == r)
     return;
 
-  unsigned int m = (l + r)/2;
+  unsigned int m = (l + r) / 2;
 
   merge_sort(v, a, l, m);
   merge_sort(v, a, m + 1, r);
@@ -43,21 +43,21 @@ void merge_sort (vector<T> &v, vector<T> &a, unsigned int l, unsigned int r) {
 }
 
 template <typename T>
-void quick_sort (vector<T> &v, unsigned int l, unsigned int r) {
+void quick_sort(vector<T>& v, unsigned int l, unsigned int r) {
   unsigned int i, j, p;
 
   // p = v[pivot(v, l, r)];
-  p = v[((l + r)/2)];
+  p = v[((l + r) / 2)];
 
   i = l;
   j = r;
 
   while (i < j) {
-    while (v[i] < p) { // anda o i até o próximo elemento maior que o pivot
+    while (v[i] < p) {
       i++;
     }
 
-    while (v[j] > p) { // anda o j até o próximo elemento menor que o pivot
+    while (v[j] > p) {
       j--;
     }
 
@@ -80,7 +80,7 @@ void quick_sort (vector<T> &v, unsigned int l, unsigned int r) {
 }
 
 template <typename T>
-void merge_sort (vector<T> &v) {
+void merge_sort(vector<T>& v) {
   vector<T> a;
 
   a = v;
@@ -91,7 +91,7 @@ void merge_sort (vector<T> &v) {
 }
 
 template <typename T>
-void quick_sort (vector<T> &v) {
+void quick_sort(vector<T>& v) {
   quick_sort(v, 0, v.size() - 1);
 
   return;

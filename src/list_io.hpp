@@ -3,8 +3,8 @@
 #include <iostream>
 
 template <typename T>
-std::ostream& operator<< (std::ostream &os, const list<T> &L) {
-  for (const auto &it : L) {
+std::ostream& operator<<(std::ostream& os, const list<T>& L) {
+  for (const auto& it : L) {
     /*if (it->prev == L.head) {
       os << "(prev: S) ";
     } else {
@@ -19,7 +19,7 @@ std::ostream& operator<< (std::ostream &os, const list<T> &L) {
       os << "(next: " << (it->next->data) << ") ";
     }*/
 
-    os << std::endl;				
+    os << std::endl;
   }
 
   return os;

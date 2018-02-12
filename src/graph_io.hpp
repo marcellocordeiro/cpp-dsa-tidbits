@@ -2,11 +2,11 @@
 
 #include "graph.hpp"
 
-std::ostream& operator<< (std::ostream &os, graph &G) {
+std::ostream& operator<<(std::ostream& os, graph& G) {
   for (int i = 0; i < G.size(); i++) {
     os << "===G[" << i << "]===" << std::endl;
 
-    for (const auto &it : G[i]) {
+    for (const auto& it : G[i]) {
       os << it.first << "(" << it.second << ")" << ' ';
     }
     os << std::endl;
@@ -16,11 +16,11 @@ std::ostream& operator<< (std::ostream &os, graph &G) {
 }
 
 // Alternative
-/* friend std::ostream& operator<< (std::ostream &os, graph &g) {
+/* friend std::ostream& operator<<(std::ostream& os, graph& g) {
   for (int i = 0; i < g.size(); i++) {
     os << "===G[" << i << "]===" << std::endl;
 
-    for (const auto &it : g[i]) {
+    for (const auto& it : g[i]) {
       os << it.first << "(" << it.second << ")" << ' ';
     }
     os << std::endl;

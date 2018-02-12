@@ -2,7 +2,7 @@
 
 class union_find {
 public:
-  union_find (int size) : node(new int[size]), height(new int[size]) { // make_set
+  union_find(int size) : node(new int[size]), height(new int[size]) { // make_set
     for (int i = 0; i < size; i++) {
       node[i] = i;
     }
@@ -12,12 +12,12 @@ public:
     }
   }
 
-  ~union_find () {
+  ~union_find() {
     delete[] node;
     delete[] height;
   }
 
-  void merge (int x, int y) { // merge = union
+  void merge(int x, int y) { // merge = union
     x = find(x);
     y = find(y);
 
@@ -35,7 +35,7 @@ public:
     }
   }
 
-  int find (int p) {
+  int find(int p) {
     if (node[p] != p) {
       node[p] = find(node[p]);
     }
@@ -44,6 +44,6 @@ public:
   }
 
 private:
-  int *node;
-  int *height;
+  int* node;
+  int* height;
 };

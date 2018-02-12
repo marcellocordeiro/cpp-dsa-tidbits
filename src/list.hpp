@@ -7,60 +7,60 @@ protected:
   using size_type = unsigned int;
 
 public:
-  list () : _size(0) {
+  list() : _size(0) {
     head = new node;
     tail = head;
   }
 
-  list (const list<T> &l) : _size(0) {
+  list(const list<T>& l) : _size(0) {
     head = new node;
     tail = head;
 
-    for (const auto &it : l) {
+    for (const auto& it : l) {
       push_back(it);
     }
   }
 
-  ~list () {
+  ~list() {
     delete_list(head);
   }
 
   class iterator;
   class const_iterator;
 
-  iterator begin () {
+  iterator begin() {
     return iterator(head->next);
   }
 
-  iterator end () {
+  iterator end() {
     return iterator(nullptr);
   }
 
-  const_iterator begin () const {
+  const_iterator begin() const {
     return const_iterator(head->next);
   }
 
-  const_iterator end () const {
+  const_iterator end() const {
     return const_iterator(nullptr);
   }
 
-  inline bool empty () const {
+  inline bool empty() const {
     return (_size == 0);
   }
 
-  inline size_type size () const {
+  inline size_type size() const {
     return _size;
   }
 
-  inline T front () const {
+  inline T front() const {
     return head->next->data;
   }
 
-  inline T back () const {
+  inline T back() const {
     return tail->data;
   }
 
-  void push_front (const T value) {
+  void push_front(const T value) {
     insert(value, head);
 
     if (_size == 1) {
@@ -68,7 +68,7 @@ public:
     }
   }
 
-  void pop_front () {
+  void pop_front() {
     if (_size == 0) {
       return;
     }
@@ -80,13 +80,13 @@ public:
     }
   }
 
-  void push_back (const T value) {
+  void push_back(const T value) {
     insert(value, tail);
 
     tail = tail->next;
   }
 
-  void pop_back () {
+  void pop_back() {
     if (_size == 0) {
       return;
     }
@@ -96,9 +96,9 @@ public:
     erase(tail->next);
   }
 
-  void swap (list<T> &l) {
-    node *l_head = l.head;
-    node *l_tail = l.tail;
+  void swap(list<T>& l) {
+    node* l_head = l.head;
+    node* l_tail = l.tail;
     size_type l_size = l._size;
 
     l.head = head;
@@ -110,17 +110,17 @@ public:
     _size = l_size;
   }
 
-  list<T> &operator= (list<T> &rhs) {
+  list<T>& operator=(list<T>& rhs) {
     list<T> temp(rhs);
-    
+
     swap(temp);
-    
+
     return *this;
   }
 
 private:
-  void erase (node *ptr) {
-    node *temp = ptr;
+  void erase(node* ptr) {
+    node* temp = ptr;
 
     if (ptr->next != nullptr) {
       ptr->next->prev = ptr->prev;
@@ -133,8 +133,8 @@ private:
     _size--;
   }
 
-  void insert (const T value, node *ptr) {
-    node *temp = new node(value, ptr, ptr->next);
+  void insert(const T value, node* ptr) {
+    node* temp = new node(value, ptr, ptr->next);
 
     if (ptr->next != nullptr) {
       ptr->next->prev = temp;
@@ -144,8 +144,8 @@ private:
 
     _size++;
   }
-  
-  void delete_list (node *ptr) {
+
+  void delete_list(node* ptr) {
     if (ptr == nullptr) {
       return;
     }
@@ -156,88 +156,92 @@ private:
   }
 
 protected:
-  node *head;
-  node *tail;
+  node* head;
+  node* tail;
   size_type _size;
 
   /*
-    * todo:
-    *  search by value
-    *  search by pos
-    */
+   * todo:
+   *  search by value
+   *  search by pos
+   */
 };
 
 template <typename T>
 struct list<T>::node {
   T data;
-  node *prev;
-  node *next;
+  node* prev;
+  node* next;
 
-  node () : prev(nullptr), next(nullptr) {}
+  node() : prev(nullptr), next(nullptr) {
+  }
 
-  node (const T value, node *prev, node *next) : data(value), prev(prev), next(next) {}
+  node(const T value, node* prev, node* next) : data(value), prev(prev), next(next) {
+  }
 };
 
 template <typename T>
 class list<T>::iterator {
 public:
-  iterator (node *it = nullptr) : ptr(it) {} // nullptr = default parameter
+  iterator(node* it = nullptr) : ptr(it) {
+  } // nullptr = default parameter
 
-  node *operator= (const node *rhs) {
+  node* operator=(const node* rhs) {
     ptr = rhs;
     return ptr;
   }
 
-  inline bool operator!= (iterator rhs) const {
+  inline bool operator!=(iterator rhs) const {
     return !(ptr == rhs.ptr);
   }
 
-  inline T &operator* () const {
+  inline T& operator*() const {
     return ptr->data;
   }
 
-  iterator &operator++ (int) {
+  iterator& operator++(int) {
     ptr = ptr->next;
     return *this;
   }
 
-  iterator &operator++ () {
+  iterator& operator++() {
     ptr = ptr->next;
     return *this;
   }
 
 private:
-  node *ptr;
+  node* ptr;
 };
 
 template <typename T>
 class list<T>::const_iterator {
 public:
-  const_iterator (const node *it = nullptr) : ptr(it) {} // nullptr = default parameter
+  const_iterator(const node* it = nullptr) : ptr(it) {
+  } // nullptr = default parameter
 
-  node *operator= (const node *rhs) {
+  node* operator=(const node* rhs) {
     ptr = rhs;
     return ptr;
   }
 
-  inline bool operator!= (const const_iterator rhs) const {
+  inline bool operator!=(const const_iterator rhs) const {
     return !(ptr == rhs.ptr);
   }
 
-  inline const T &operator* () const {
+  inline const T& operator*() const {
     return ptr->data;
   }
 
-  const_iterator &operator++ (int) {
+  const_iterator& operator++(int) {
     ptr = ptr->next;
     return *this;
   }
 
-  const_iterator &operator++ () {
+  const_iterator& operator++() {
     ptr = ptr->next;
     return *this;
   }
 
 private:
-  const node *ptr;
+  const node* ptr;
 };

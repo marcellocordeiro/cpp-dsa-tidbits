@@ -1,6 +1,5 @@
 compiler = g++
-#flags = -Wall -std=c++11
-flags = -Wall -lm -lcrypt -O2 -pipe -w -std=c++11
+flags = -std=c++14 -Wall -Wextra -Werror -pedantic -pedantic-errors -O2
 
 main_name = main
 test_name = test

@@ -1,59 +1,59 @@
 #pragma once
 
 #include "algorithm.hpp"
-#include "utility.hpp"
 #include "functional.hpp"
-#include "vector.hpp"
-#include "queue.hpp"
 #include "heap.hpp"
+#include "queue.hpp"
+#include "utility.hpp"
+#include "vector.hpp"
 
 #define INF 2147483647
 
 class graph {
 public:
-  graph (int V) : _size(V) {
+  graph(int V) : _size(V) {
     G = new vector<pair<int, int>>[_size];
   }
 
-  ~graph () {
+  ~graph() {
     delete[] G;
   }
 
-  int size () {
+  int size() {
     return _size;
   }
 
-  void add_edge (pair<int, int> edge, int weight = 1) {
+  void add_edge(pair<int, int> edge, int weight = 1) {
     G[edge.first].push_back({edge.second, weight});
     G[edge.second].push_back({edge.first, weight});
   }
 
-  vector<pair<int, int>>& operator[] (int i) {
+  vector<pair<int, int>>& operator[](int i) {
     return G[i];
   }
 
-  void dfs () { // all vertices
+  void dfs() { // all vertices
     vector<bool> P(_size, false);
 
-    for (int s = 0; s < _size; s++) {
+    for (int s = 0; s < _size; ++s) {
       if (P[s] == false) {
         dfs_visit(s, P);
       }
     }
   }
 
-  void dfs (int s) { // s is the source
+  void dfs(int s) { // s is the source
     vector<bool> P(_size, false);
 
     dfs_visit(s, P);
   }
 
-  void dfs_visit (int s, vector<bool> &P) {
+  void dfs_visit(int s, vector<bool>& P) {
     P[s] = true;
 
     // pre_visit(s);
 
-    for (const auto &it : G[s]) {
+    for (const auto& it : G[s]) {
       int v = it.first;
 
       if (P[v] == false) {
@@ -64,23 +64,23 @@ public:
     // post_visit(s);
   }
 
-  void bfs () {
+  void bfs() {
     vector<bool> P(_size, false);
 
-    for (int s = 0; s < _size; s++) {
+    for (int s = 0; s < _size; ++s) {
       if (P[s] == false) {
         bfs_visit(s, P);
       }
     }
   }
 
-  void bfs (int s) {
+  void bfs(int s) {
     vector<bool> P(_size, false);
 
     bfs_visit(s, P);
   }
 
-  void bfs_visit (int s, vector<bool> &P) {
+  void bfs_visit(int s, vector<bool>& P) {
     queue<int> q;
 
     q.push(s);
@@ -93,7 +93,7 @@ public:
 
       // pre_visit(u);
 
-      for (const auto &it : G[u]) {
+      for (const auto& it : G[u]) {
         int v = it.first;
 
         if (P[v] == false) {
@@ -106,8 +106,9 @@ public:
     }
   }
 
-  pair<vector<int>, vector<int>> shortest_path (int s) {
-    vector<int> D(_size, INF), F(_size, -1); // D = shortest distance from A to B, F = path
+  pair<vector<int>, vector<int>> shortest_path(int s) {
+    // D = shortest distance from A to B, F = path
+    vector<int> D(_size, INF), F(_size, -1);
 
     D[s] = 0;
 
@@ -118,7 +119,7 @@ public:
       int u = q.front();
       q.pop();
 
-      for (const auto &it : G[u]) {
+      for (const auto& it : G[u]) {
         int v = it.first;
 
         if (D[v] == INF) {
@@ -133,8 +134,9 @@ public:
     return {D, F};
   }
 
-  pair<vector<int>, vector<int>> dijkstra (int s) {
-    vector<int> D(_size, INF), F(_size, -1); // D = shortest distance from A to B, F = path
+  pair<vector<int>, vector<int>> dijkstra(int s) {
+    // D = shortest distance from A to B, F = path
+    vector<int> D(_size, INF), F(_size, -1);
     priority_queue<pair<int, int>, greater<pair<int, int>>> pq;
 
     D[s] = 0;
@@ -149,7 +151,7 @@ public:
         continue;
       }
 
-      for (const auto &it : G[u]) {
+      for (const auto& it : G[u]) {
         if (D[u] + it.second < D[it.first]) {
           D[it.first] = D[u] + it.second;
           F[it.first] = u;
@@ -162,7 +164,7 @@ public:
     return {D, F};
   }
 
-  pair<vector<int>, vector<int>> prim (int s) {
+  pair<vector<int>, vector<int>> prim(int s) {
     vector<int> W(_size, INF), F(_size, -1);
     vector<bool> S(_size, false);
 
@@ -177,31 +179,31 @@ public:
 
       S[u] = true;
 
-      for (const auto &it : G[u]) {
+      for (const auto& it : G[u]) {
         int v = it.first;
         int w = it.second;
 
         if (S[v] == false && W[v] > w) {
           W[v] = w;
           pq.push({W[v], v});
-          
+
           F[v] = u;
         }
       }
     }
 
-    /*graph T(V);
+    /* graph T(V);
 
-    for (int i = 0; i < _size; i++) {
+    for (int i = 0; i < _size; ++i) {
       if (fw.first[i] != -1) {
         T.add_edge({i, fw.first[i]}, fw.second[i]);
       }
-    }*/
+    } */
 
     return {F, W};
   }
 
 private:
-  vector<pair<int, int>> *G;
+  vector<pair<int, int>>* G;
   int _size;
 };
