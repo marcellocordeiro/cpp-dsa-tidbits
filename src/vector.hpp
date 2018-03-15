@@ -2,26 +2,36 @@
 
 template <typename T>
 class vector {
-  using size_type = unsigned int;
-  using iterator = T*;
+  using value_type = T;
+  using pointer = value_type*;
+  using const_pointer = const value_type*;
+  using reference = value_type&;
+  using const_reference = const value_type&;
+  using iterator = value_type*;
+  using const_iterator = const value_type*;
+  using size_type = std::size_t;
+
+  // STL compatibility
+  // adding : public std::iterator<std::random_access_iterator_tag, T> works too
+  using iterator_tag = std::random_access_iterator_tag;
+  using difference_type = std::ptrdiff_t;
 
 public:
-  vector() : ptr(nullptr), _size(0), _capacity(32) {
-    ptr = new T[_capacity];
+  vector() {
   }
 
-  vector(const vector<T>& v) : ptr(new T[v._capacity]), _size(v._size), _capacity(v._capacity) {
+  vector(const vector<T>& v) : ptr(new value_type[v._capacity]), _size(v._size), _capacity(v._capacity) {
     for (size_type i = 0; i < _size; ++i) {
       ptr[i] = v[i];
     }
   }
 
-  vector(size_type n, T value) : ptr(nullptr), _size(n), _capacity(32) {
+  vector(const size_type n, const_reference value) : ptr(nullptr), _size(n), _capacity(32) {
     while (n > _capacity) {
       _capacity *= 2;
     }
 
-    ptr = new T[_capacity];
+    ptr = new value_type[_capacity];
 
     for (size_type i = 0; i < n; ++i) {
       ptr[i] = value;
@@ -40,6 +50,14 @@ public:
     return ptr + _size;
   }
 
+  const_iterator begin() const {
+    return ptr;
+  }
+
+  const_iterator end() const {
+    return ptr + _size;
+  }
+
   size_type size() const {
     return _size;
   }
@@ -52,17 +70,17 @@ public:
     return (_size == 0);
   }
 
-  T front() const {
+  reference front() const {
     return ptr[0];
   }
 
-  T back() const {
+  reference back() const {
     return ptr[_size - 1];
   }
 
-  void resize(const size_type new_size, const T value = 0) {
+  /* void resize(const size_type new_size, const_reference value = value_type()) {
     // todo
-  }
+  } */
 
   void reserve(const size_type new_capacity) {
     if (new_capacity <= 32) {
@@ -76,12 +94,12 @@ public:
     bool capacity_change = false;
 
     if (new_capacity < _capacity) {
-      while (_capacity / 2 >= new_capacity) {
+      while ((_capacity / 2) >= new_capacity) {
         capacity_change = true;
         _capacity /= 2;
       }
     } else if (new_capacity > _capacity) {
-      while (_capacity * 2 <= new_capacity) {
+      while ((_capacity * 2) <= new_capacity) {
         capacity_change = true;
         _capacity *= 2;
       }
@@ -91,7 +109,7 @@ public:
       return;
     }
 
-    T* temp = new T[_capacity];
+    pointer temp = new value_type[_capacity];
 
     for (size_type i = 0; i < _size; ++i) {
       temp[i] = ptr[i];
@@ -101,7 +119,7 @@ public:
     ptr = temp;
   }
 
-  void push_back(const T value) {
+  void push_back(const_reference value) {
     if (_size == _capacity) {
       reserve(_capacity * 2);
     }
@@ -110,13 +128,13 @@ public:
   }
 
   void pop_back() {
-    _size--;
+    --_size;
   }
 
   void swap(vector<T>& v) {
-    T* v_ptr = v.ptr;
-    T v_size = v._size;
-    T v_capacity = v._capacity;
+    pointer v_ptr = v.ptr;
+    value_type v_size = v._size;
+    value_type v_capacity = v._capacity;
 
     v.ptr = ptr;
     v._size = _size;
@@ -131,14 +149,14 @@ public:
     delete[] ptr;
     _size = 0;
     _capacity = 32;
-    ptr = new T[_capacity];
+    ptr = new value_type[_capacity];
   }
 
-  T& operator[](const size_type i) {
+  reference operator[](const size_type i) {
     return ptr[i];
   }
 
-  T& operator[](const size_type i) const {
+  reference operator[](const size_type i) const {
     return ptr[i];
   }
 
@@ -151,7 +169,7 @@ public:
   }
 
 private:
-  T* ptr;
-  size_type _size;
-  size_type _capacity;
+  size_type _size = 0;
+  size_type _capacity = 32;
+  pointer ptr = new value_type[_capacity];
 };

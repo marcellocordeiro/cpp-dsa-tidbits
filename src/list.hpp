@@ -1,28 +1,33 @@
 #pragma once
 
+#include <cstddef>
+#include <iterator>
+
 template <typename T>
 class list {
-protected:
   struct node;
-  using size_type = unsigned int;
 
 public:
-  list() : _size(0) {
-    head = new node;
-    tail = head;
+  using value_type = T;
+  using pointer = node*;
+  using const_pointer = const node*;
+  using reference = value_type&;
+  using const_reference = const value_type&;
+  using size_type = std::size_t;
+
+  list() {
   }
 
-  list(const list<T>& l) : _size(0) {
-    head = new node;
-    tail = head;
-
-    for (const auto& it : l) {
+  list(const list<value_type>& rhs) {
+    for (const auto& it : rhs) {
       push_back(it);
     }
   }
 
   ~list() {
-    delete_list(head);
+    clear();
+
+    delete head;
   }
 
   class iterator;
@@ -44,23 +49,23 @@ public:
     return const_iterator(nullptr);
   }
 
-  inline bool empty() const {
+  bool empty() const {
     return (_size == 0);
   }
 
-  inline size_type size() const {
+  size_type size() const {
     return _size;
   }
 
-  inline T front() const {
+  reference front() const {
     return head->next->data;
   }
 
-  inline T back() const {
+  reference back() const {
     return tail->data;
   }
 
-  void push_front(const T value) {
+  void push_front(const_reference value) {
     insert(value, head);
 
     if (_size == 1) {
@@ -68,11 +73,13 @@ public:
     }
   }
 
-  void pop_front() {
-    if (_size == 0) {
-      return;
-    }
+  void push_back(const_reference value) {
+    insert(value, tail);
 
+    tail = tail->next;
+  }
+
+  void pop_front() {
     erase(head->next);
 
     if (_size == 0) {
@@ -80,38 +87,34 @@ public:
     }
   }
 
-  void push_back(const T value) {
-    insert(value, tail);
-
-    tail = tail->next;
-  }
-
   void pop_back() {
-    if (_size == 0) {
-      return;
-    }
-
     tail = tail->prev;
 
     erase(tail->next);
   }
 
-  void swap(list<T>& l) {
-    node* l_head = l.head;
-    node* l_tail = l.tail;
-    size_type l_size = l._size;
+  void clear() {
+    while (!empty()) {
+      pop_front();
+    }
+  }
 
-    l.head = head;
-    l.tail = tail;
-    l._size = _size;
+  void swap(list<value_type>& rhs) {
+    pointer l_head = rhs.head;
+    pointer l_tail = rhs.tail;
+    size_type l_size = rhs._size;
+
+    rhs.head = head;
+    rhs.tail = tail;
+    rhs._size = _size;
 
     head = l_head;
     tail = l_tail;
     _size = l_size;
   }
 
-  list<T>& operator=(list<T>& rhs) {
-    list<T> temp(rhs);
+  list<value_type>& operator=(list<value_type>& rhs) {
+    list<value_type> temp(rhs);
 
     swap(temp);
 
@@ -119,8 +122,20 @@ public:
   }
 
 private:
-  void erase(node* ptr) {
-    node* temp = ptr;
+  void insert(const_reference value, pointer ptr) {
+    auto temp = new node(value, ptr, ptr->next);
+
+    if (ptr->next != nullptr) {
+      ptr->next->prev = temp;
+    }
+
+    ptr->next = temp;
+
+    _size++;
+  }
+
+  void erase(pointer ptr) {
+    pointer temp = ptr;
 
     if (ptr->next != nullptr) {
       ptr->next->prev = ptr->prev;
@@ -133,69 +148,64 @@ private:
     _size--;
   }
 
-  void insert(const T value, node* ptr) {
-    node* temp = new node(value, ptr, ptr->next);
-
-    if (ptr->next != nullptr) {
-      ptr->next->prev = temp;
-    }
-
-    ptr->next = temp;
-
-    _size++;
-  }
-
-  void delete_list(node* ptr) {
-    if (ptr == nullptr) {
-      return;
-    }
-
-    delete_list(ptr->next);
-
-    delete ptr;
-  }
-
-protected:
-  node* head;
-  node* tail;
-  size_type _size;
-
-  /*
-   * todo:
-   *  search by value
-   *  search by pos
-   */
+  pointer head = new node;
+  pointer tail = head;
+  size_type _size = 0;
 };
 
 template <typename T>
 struct list<T>::node {
-  T data;
-  node* prev;
-  node* next;
+  using value_type = list<T>::value_type;
+  using pointer = list<T>::pointer;
+  using reference = list<T>::reference;
 
-  node() : prev(nullptr), next(nullptr) {
+  value_type data;
+  pointer prev = nullptr;
+  pointer next = nullptr;
+
+  node() {
   }
 
-  node(const T value, node* prev, node* next) : data(value), prev(prev), next(next) {
+  node(const_reference value, pointer prev, pointer next) : data(value), prev(prev), next(next) {
   }
 };
 
 template <typename T>
 class list<T>::iterator {
 public:
-  iterator(node* it = nullptr) : ptr(it) {
-  } // nullptr = default parameter
+  using value_type = list<T>::value_type;
+  using pointer = list<T>::pointer;
+  using const_pointer = list<T>::const_pointer;
+  using reference = list<T>::reference;
+  using const_reference = list<T>::const_reference;
+  using size_type = list<T>::size_type;
 
-  node* operator=(const node* rhs) {
+  // STL compatibility
+  // adding : public std::iterator<std::forward_iterator_tag, T> works too
+  using iterator_category = std::forward_iterator_tag;
+  using difference_type = std::ptrdiff_t;
+
+  iterator(pointer ptr) : ptr(ptr) {
+  }
+
+  pointer operator=(const_pointer rhs) {
     ptr = rhs;
     return ptr;
   }
 
-  inline bool operator!=(iterator rhs) const {
-    return !(ptr == rhs.ptr);
+  bool operator==(const iterator& rhs) const {
+    return (ptr == rhs.ptr);
   }
 
-  inline T& operator*() const {
+  bool operator!=(const iterator& rhs) const {
+    return !(*this == rhs);
+  }
+
+  pointer operator->() const {
+    return ptr;
+  }
+
+  reference operator*() const {
     return ptr->data;
   }
 
@@ -210,25 +220,45 @@ public:
   }
 
 private:
-  node* ptr;
+  pointer ptr;
 };
 
 template <typename T>
 class list<T>::const_iterator {
 public:
-  const_iterator(const node* it = nullptr) : ptr(it) {
-  } // nullptr = default parameter
+  using value_type = list<T>::value_type;
+  using pointer = list<T>::pointer;
+  using const_pointer = list<T>::const_pointer;
+  using reference = list<T>::reference;
+  using const_reference = list<T>::const_reference;
+  using size_type = list<T>::size_type;
 
-  node* operator=(const node* rhs) {
+  // STL compatibility
+  // adding : public std::iterator<std::forward_iterator_tag, T> works too
+  using iterator_category = std::forward_iterator_tag;
+  using difference_type = std::ptrdiff_t;
+
+  const_iterator(pointer ptr) : ptr(ptr) {
+  }
+
+  pointer operator=(const_pointer rhs) {
     ptr = rhs;
     return ptr;
   }
 
-  inline bool operator!=(const const_iterator rhs) const {
-    return !(ptr == rhs.ptr);
+  bool operator==(const const_iterator& rhs) const {
+    return (ptr == rhs.ptr);
   }
 
-  inline const T& operator*() const {
+  bool operator!=(const const_iterator& rhs) const {
+    return !(*this == rhs);
+  }
+
+  const_pointer operator->() const {
+    return ptr;
+  }
+
+  const_reference operator*() const {
     return ptr->data;
   }
 
@@ -243,5 +273,5 @@ public:
   }
 
 private:
-  const node* ptr;
+  pointer ptr;
 };
