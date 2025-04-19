@@ -5,20 +5,15 @@
 
 template <typename T>
 void merge(vector<T>& v, vector<T>& a, unsigned int l, unsigned int r) {
-  unsigned int i;
-  unsigned int j;
-  unsigned int k;
-  unsigned int m;
-
-  for (k = l; k <= r; k++) {
+  for (auto k = l; k <= r; k++) {
     a[k] = v[k];
   }
 
-  m = (l + r) / 2;
-  i = l;
-  j = m + 1;
+  auto m = (l + r) / 2;
+  auto i = l;
+  auto j = m + 1;
 
-  for (k = l; k <= r; k++) {
+  for (auto k = l; k <= r; k++) {
     if (i == m + 1) {
       v[k] = a[j++];
     } else if (j == r + 1) {
@@ -47,15 +42,11 @@ void merge_sort(vector<T>& v, vector<T>& a, unsigned int l, unsigned int r) {
 
 template <typename T>
 void quick_sort(vector<T>& v, unsigned int l, unsigned int r) {
-  unsigned int i;
-  unsigned int j;
-  unsigned int p;
+  // auto p = v[pivot(v, l, r)];
+  auto p = v[((l + r) / 2)];
 
-  // p = v[pivot(v, l, r)];
-  p = v[((l + r) / 2)];
-
-  i = l;
-  j = r;
+  auto i = l;
+  auto j = r;
 
   while (i < j) {
     while (v[i] < p) {

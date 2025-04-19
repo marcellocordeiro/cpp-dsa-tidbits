@@ -59,14 +59,12 @@ private:
   }*/
 
   T height(const node* root) const {
-    T l, r;
-
     if (root == nullptr) {
       return 0;
     }
 
-    l = height(root->left);
-    r = height(root->right);
+    auto l = height(root->left);
+    auto r = height(root->right);
 
     return (l > r) ? (l + 1) : (r + 1);
   }
@@ -78,19 +76,20 @@ private:
 
     if (root->data > value) {
       return search(root->left, value);
-    } else if (root->data < value) {
-      return search(root->right, value);
-    } else {
-      return true;
     }
+
+    if (root->data < value) {
+      return search(root->right, value);
+    }
+    return true;
   }
 
   node* find_min(const node* root) const {
     if (root->left == nullptr) {
       return root;
-    } else {
-      return find_min(root->left);
     }
+
+    return find_min(root->left);
   }
 
   node* remove(node* root, const T value) {
@@ -109,17 +108,19 @@ private:
         delete root;
 
         return temp;
-      } else if (root->right == nullptr) {
+      }
+
+      if (root->right == nullptr) {
         node* temp = root->left;
 
         delete root;
 
         return temp;
-      } else {
-        node* temp = find_min(root->right);
-        root->data = temp->data;
-        root->right = remove(root->right, temp->data);
       }
+
+      node* temp = find_min(root->right);
+      root->data = temp->data;
+      root->right = remove(root->right, temp->data);
     }
 
     return root;

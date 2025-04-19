@@ -98,7 +98,7 @@ public:
     }
   }
 
-  void swap(list<value_type>& rhs) {
+  void swap(list<value_type>& rhs) noexcept {
     pointer l_head = rhs.head;
     pointer l_tail = rhs.tail;
     size_type l_size = rhs._size;

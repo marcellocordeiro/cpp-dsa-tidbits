@@ -132,13 +132,7 @@ void graphTest() {
     G.add_edge({4, 2}, 8);
     G.add_edge({4, 3}, 2);
 
-#if __cplusplus >= 201703L
-    auto[d, f] = G.dijkstra(0);
-#else
-    auto df = G.dijkstra(0);
-    auto d = df.first;
-    auto f = df.second;
-#endif
+    auto [d, f] = G.dijkstra(0);
 
     for (const auto& it : d) {
       std::cout << it << ' ';
@@ -175,13 +169,7 @@ void graphTest() {
     g.bfs(2);
     g.dfs(2);
 
-#if __cplusplus >= 201703L
-    auto[f, w] = g.prim(0);
-#else
-    auto fw = g.prim(0);
-    auto f = fw.first;
-    auto w = fw.second;
-#endif
+    auto [f, w] = g.prim(0);
 
     for (unsigned int i = 1; i < f.size(); i++) {
       std::cout << f[i] << " - " << i << std::endl;
