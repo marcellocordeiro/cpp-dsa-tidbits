@@ -15,8 +15,7 @@ public:
   using const_reference = const value_type&;
   using size_type = std::size_t;
 
-  list() {
-  }
+  list() = default;
 
   list(const list<value_type>& rhs) {
     for (const auto& it : rhs) {
@@ -163,11 +162,9 @@ struct list<T>::node {
   pointer prev = nullptr;
   pointer next = nullptr;
 
-  node() {
-  }
+  node() = default;
 
-  node(const_reference value, pointer prev, pointer next) : data(value), prev(prev), next(next) {
-  }
+  node(const_reference value, pointer prev, pointer next) : data(value), prev(prev), next(next) {}
 };
 
 template <typename T>
@@ -185,8 +182,7 @@ public:
   using iterator_category = std::forward_iterator_tag;
   using difference_type = std::ptrdiff_t;
 
-  iterator(pointer ptr) : ptr(ptr) {
-  }
+  explicit iterator(pointer ptr) : ptr(ptr) {}
 
   pointer operator=(const_pointer rhs) {
     ptr = rhs;
@@ -238,8 +234,7 @@ public:
   using iterator_category = std::forward_iterator_tag;
   using difference_type = std::ptrdiff_t;
 
-  const_iterator(pointer ptr) : ptr(ptr) {
-  }
+  explicit const_iterator(pointer ptr) : ptr(ptr) {}
 
   pointer operator=(const_pointer rhs) {
     ptr = rhs;

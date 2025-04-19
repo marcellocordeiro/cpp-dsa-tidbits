@@ -5,8 +5,7 @@ class bst {
   struct node;
 
 public:
-  bst() : root(nullptr) {
-  }
+  bst() = default;
 
   ~bst() {
     delete_tree(this->root);
@@ -143,18 +142,16 @@ private:
     }
   }
 
-  node* root;
+  node* root = nullptr;
 };
 
 template <typename T>
 struct bst<T>::node {
   T data;
-  node* left;
-  node* right;
+  node* left = nullptr;
+  node* right = nullptr;
 
-  node(const T value) : data(value), left(nullptr), right(nullptr) {
-  }
+  explicit node(const T value) : data(value) {}
 
-  node(const T value, node* left, node* right) : data(value), left(left), right(right) {
-  }
+  node(const T value, node* left, node* right) : data(value), left(left), right(right) {}
 };

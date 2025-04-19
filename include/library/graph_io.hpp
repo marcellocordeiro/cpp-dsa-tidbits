@@ -1,15 +1,17 @@
+#pragma once
+
 #include <iostream>
 
 #include "graph.hpp"
 
-std::ostream& operator<<(std::ostream& os, graph& G) {
-  for (int i = 0; i < G.size(); i++) {
-    os << "===G[" << i << "]===" << std::endl;
+inline std::ostream& operator<<(std::ostream& os, graph& G) {
+  for (int i = 0; i < G.size(); ++i) {
+    os << "===G[" << i << "]===" << '\n';
 
     for (const auto& it : G[i]) {
       os << it.first << "(" << it.second << ")" << ' ';
     }
-    os << std::endl;
+    os << '\n';
   }
 
   return os;
@@ -18,12 +20,12 @@ std::ostream& operator<<(std::ostream& os, graph& G) {
 // Alternative
 /* friend std::ostream& operator<<(std::ostream& os, graph& g) {
   for (int i = 0; i < g.size(); i++) {
-    os << "===G[" << i << "]===" << std::endl;
+    os << "===G[" << i << "]===" << '\n';
 
     for (const auto& it : g[i]) {
       os << it.first << "(" << it.second << ")" << ' ';
     }
-    os << std::endl;
+    os << '\n';
   }
 
   return os;

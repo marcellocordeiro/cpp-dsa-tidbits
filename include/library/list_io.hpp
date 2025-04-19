@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+#include "list.hpp"
+
 template <typename T>
 std::ostream& operator<<(std::ostream& os, const list<T>& L) {
   for (const auto& it : L) {
@@ -19,7 +21,7 @@ std::ostream& operator<<(std::ostream& os, const list<T>& L) {
       os << "(next: " << (it->next->data) << ") ";
     }*/
 
-    os << std::endl;
+    os << '\n';
   }
 
   return os;

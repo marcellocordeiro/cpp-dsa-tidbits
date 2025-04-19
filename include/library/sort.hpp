@@ -1,8 +1,14 @@
 #pragma once
 
+#include "algorithm.hpp"
+#include "vector.hpp"
+
 template <typename T>
 void merge(vector<T>& v, vector<T>& a, unsigned int l, unsigned int r) {
-  unsigned int i, j, k, m;
+  unsigned int i;
+  unsigned int j;
+  unsigned int k;
+  unsigned int m;
 
   for (k = l; k <= r; k++) {
     a[k] = v[k];
@@ -23,14 +29,13 @@ void merge(vector<T>& v, vector<T>& a, unsigned int l, unsigned int r) {
       v[k] = a[j++];
     }
   }
-
-  return;
 }
 
 template <typename T>
 void merge_sort(vector<T>& v, vector<T>& a, unsigned int l, unsigned int r) {
-  if (l == r)
+  if (l == r) {
     return;
+  }
 
   unsigned int m = (l + r) / 2;
 
@@ -38,13 +43,13 @@ void merge_sort(vector<T>& v, vector<T>& a, unsigned int l, unsigned int r) {
   merge_sort(v, a, m + 1, r);
 
   merge(v, a, l, r);
-
-  return;
 }
 
 template <typename T>
 void quick_sort(vector<T>& v, unsigned int l, unsigned int r) {
-  unsigned int i, j, p;
+  unsigned int i;
+  unsigned int j;
+  unsigned int p;
 
   // p = v[pivot(v, l, r)];
   p = v[((l + r) / 2)];
@@ -62,7 +67,7 @@ void quick_sort(vector<T>& v, unsigned int l, unsigned int r) {
     }
 
     if (i <= j) {
-      std::swap(v[i], v[j]);
+      swap(v[i], v[j]);
       i++;
       j--;
     }
@@ -75,8 +80,6 @@ void quick_sort(vector<T>& v, unsigned int l, unsigned int r) {
   if (i < r) {
     quick_sort(v, i, r);
   }
-
-  return;
 }
 
 template <typename T>
@@ -86,13 +89,9 @@ void merge_sort(vector<T>& v) {
   a = v;
 
   merge_sort(v, a, 0, v.size() - 1);
-
-  return;
 }
 
 template <typename T>
 void quick_sort(vector<T>& v) {
   quick_sort(v, 0, v.size() - 1);
-
-  return;
 }

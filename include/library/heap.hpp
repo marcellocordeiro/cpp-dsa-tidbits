@@ -1,6 +1,7 @@
 #pragma once
 
 #include "algorithm.hpp"
+#include "functional.hpp"
 #include "vector.hpp"
 
 template <typename T, class Compare = less<T>>
@@ -8,22 +9,18 @@ class priority_queue {
   using size_type = unsigned int;
 
 public:
-  priority_queue() {
-  }
+  priority_queue() = default;
 
-  priority_queue(const priority_queue<T>& pq) : H(pq.H), cmp(pq.cmp) {
-  }
+  explicit priority_queue(const priority_queue<T>& pq) : H(pq.H), cmp(pq.cmp) {}
 
-  priority_queue(const vector<T>& v) {
-    H = v;
-
+  explicit priority_queue(const vector<T>& v) : H(v) {
     for (size_type i = H.size() / 2; i > 0; --i) {
       heapify(i - 1);
     }
   }
 
   bool empty() const {
-    return (H.size() == 0);
+    return H.empty();
   }
 
   size_type size() const {
@@ -67,7 +64,9 @@ private:
   }
 
   void heapify(const size_type i) {
-    size_type l = left(i), r = right(i), m = i;
+    size_type l = left(i);
+    size_type r = right(i);
+    size_type m = i;
 
     if (l < H.size() && cmp(H[m], H[l])) {
       m = l;

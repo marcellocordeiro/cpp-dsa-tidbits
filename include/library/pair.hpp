@@ -5,11 +5,9 @@ struct pair {
   T1 first;
   T2 second;
 
-  pair() {
-  }
+  pair() = default;
 
-  pair(T1 first, T2 second) : first(first), second(second) {
-  }
+  pair(T1 first, T2 second) : first(first), second(second) {}
 
   bool operator<(const pair<T1, T2>& rhs) const {
     return first < rhs.first || (!(rhs.first < first) && second < rhs.second);

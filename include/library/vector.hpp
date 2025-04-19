@@ -1,5 +1,8 @@
 #pragma once
 
+#include <cstddef>
+#include <iterator>
+
 template <typename T>
 class vector {
   using value_type = T;
@@ -17,10 +20,12 @@ class vector {
   using difference_type = std::ptrdiff_t;
 
 public:
-  vector() {
-  }
+  vector() = default;
 
-  vector(const vector<T>& v) : ptr(new value_type[v._capacity]), _size(v._size), _capacity(v._capacity) {
+  vector(const vector<T>& v) :
+    ptr(new value_type[v._capacity]),
+    _size(v._size),
+    _capacity(v._capacity) {
     for (size_type i = 0; i < _size; ++i) {
       ptr[i] = v[i];
     }
@@ -131,7 +136,7 @@ public:
     --_size;
   }
 
-  void swap(vector<T>& v) {
+  void swap(vector<T>& v) noexcept {
     pointer v_ptr = v.ptr;
     value_type v_size = v._size;
     value_type v_capacity = v._capacity;

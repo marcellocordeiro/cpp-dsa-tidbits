@@ -1,20 +1,22 @@
+#pragma once
+
 #include <iostream>
 #include <string>
 
-#include "src/algorithm.hpp"
-#include "src/array.hpp"
-#include "src/bst.hpp"
-#include "src/functional.hpp"
-#include "src/graph.hpp"
-#include "src/graph_io.hpp"
-#include "src/heap.hpp"
-#include "src/list.hpp"
-#include "src/list_io.hpp"
-#include "src/queue.hpp"
-#include "src/stack.hpp"
-#include "src/union_find.hpp"
-#include "src/utility.hpp"
-#include "src/vector.hpp"
+#include <library/algorithm.hpp>
+#include <library/array.hpp>
+#include <library/bst.hpp>
+#include <library/functional.hpp>
+#include <library/graph.hpp>
+#include <library/graph_io.hpp>
+#include <library/heap.hpp>
+#include <library/list.hpp>
+#include <library/list_io.hpp>
+#include <library/queue.hpp>
+#include <library/stack.hpp>
+#include <library/union_find.hpp>
+#include <library/utility.hpp>
+#include <library/vector.hpp>
 
 void vectorTest() {
   vector<int> a, b;
@@ -209,22 +211,4 @@ void graphTest() {
 
     std::cout << T;
   }
-}
-
-int main() {
-  // queueTest();
-  // heapTest();
-  // vectorTest();
-  // pairTest();
-  // bstTest();
-  // graphTest();
-  // arrayTest();
-
-  // heap<pair<int, int>, less> h;
-  // list<pair<int, int>> l;
-  // list<pair<int, int>> l;
-
-  // std::cin.get();
-
-  return 0;
 }
