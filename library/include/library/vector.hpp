@@ -23,15 +23,15 @@ public:
   vector() = default;
 
   vector(const vector<T>& v) :
-    ptr(new value_type[v._capacity]),
     _size(v._size),
-    _capacity(v._capacity) {
+    _capacity(v._capacity),
+    ptr(new value_type[v._capacity]) {
     for (size_type i = 0; i < _size; ++i) {
       ptr[i] = v[i];
     }
   }
 
-  vector(const size_type n, const_reference value) : ptr(nullptr), _size(n), _capacity(32) {
+  vector(const size_type n, const_reference value) : _size(n) {
     while (n > _capacity) {
       _capacity *= 2;
     }

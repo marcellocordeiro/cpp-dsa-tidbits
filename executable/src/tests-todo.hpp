@@ -19,7 +19,8 @@
 #include <library/vector.hpp>
 
 void vectorTest() {
-  vector<int> a, b;
+  vector<int> a;
+  vector<int> b;
 
   a.push_back(4);
   a.push_back(5);
@@ -33,7 +34,7 @@ void vectorTest() {
 
   for (auto it : a)
     std::cout << it << " ";
-  std::cout << std::endl;
+  std::cout << '\n';
 
   a = b;
 
@@ -41,7 +42,7 @@ void vectorTest() {
 
   for (auto it : a)
     std::cout << it << " ";
-  std::cout << std::endl;
+  std::cout << '\n';
 }
 
 void stackTest() {
@@ -100,25 +101,25 @@ void heapTest() {
   // h.printCap();
 
   while (h.size()) {
-    std::cout << "[" << h.top() << "] " << std::endl;
+    std::cout << "[" << h.top() << "] " << '\n';
     h.pop();
   }
 }
 
 void pairTest() {
-  pair<int, std::string> p = {5, "huehuehu"}, k;
+  pair<int, std::string> p = {5, "five"}, k;
 
-  p = {8, "kkk"};
+  p = {8, "eight"};
 
-  p.second = "agoravai";
+  p.second = "second";
 
   k = p;
 
-  std::cout << k.first << ' ' << k.second << std::endl;
+  std::cout << k.first << ' ' << k.second << '\n';
 }
 
 void graphTest() {
-  std::cout << __cplusplus << std::endl;
+  std::cout << __cplusplus << '\n';
   {
     graph G(5);
 
@@ -137,12 +138,12 @@ void graphTest() {
     for (const auto& it : d) {
       std::cout << it << ' ';
     }
-    std::cout << std::endl;
+    std::cout << '\n';
 
     for (const auto& it : f) {
       std::cout << it << ' ';
     }
-    std::cout << std::endl;
+    std::cout << '\n';
 
     std::cout << G;
   }
@@ -172,7 +173,7 @@ void graphTest() {
     auto [f, w] = g.prim(0);
 
     for (unsigned int i = 1; i < f.size(); i++) {
-      std::cout << f[i] << " - " << i << std::endl;
+      std::cout << f[i] << " - " << i << '\n';
     }
 
     graph T(V);
@@ -180,12 +181,12 @@ void graphTest() {
     for (const auto& it : f) {
       std::cout << it << ' ';
     }
-    std::cout << std::endl;
+    std::cout << '\n';
 
     for (const auto& it : w) {
       std::cout << it << ' ';
     }
-    std::cout << std::endl;
+    std::cout << '\n';
 
     for (int i = 0; i < 9; i++) {
       if (f[i] != -1) {
@@ -195,7 +196,7 @@ void graphTest() {
 
     std::cout << g;
 
-    std::cout << std::endl;
+    std::cout << '\n';
 
     std::cout << T;
   }

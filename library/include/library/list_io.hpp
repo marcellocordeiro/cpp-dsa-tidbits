@@ -5,7 +5,7 @@
 #include "list.hpp"
 
 template <typename T>
-std::ostream& operator<<(std::ostream& os, const list<T>& L) {
+auto operator<<(std::ostream& os, const list<T>& L) -> std::ostream& {
   for (const auto& it : L) {
     /*if (it->prev == L.head) {
       os << "(prev: S) ";

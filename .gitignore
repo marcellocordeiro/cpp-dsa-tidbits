@@ -1,10 +1,4 @@
-**/.clangd/
-**/.idea/
-**/.vs/
-**/.vscode/
-**/build/
-**/bin/
-CMakeSettings.json
+.clangd
 
 # Created by https://www.toptal.com/developers/gitignore/api/c++,clion,cmake,macos,visualstudio,visualstudiocode
 # Edit at https://www.toptal.com/developers/gitignore?templates=c++,clion,cmake,macos,visualstudio,visualstudiocode
