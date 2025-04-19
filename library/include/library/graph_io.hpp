@@ -4,7 +4,7 @@
 
 #include "graph.hpp"
 
-inline std::ostream& operator<<(std::ostream& os, graph& G) {
+inline auto operator<<(std::ostream& os, graph& G) -> std::ostream& {
   for (int i = 0; i < G.size(); ++i) {
     os << "===G[" << i << "]===" << '\n';
 

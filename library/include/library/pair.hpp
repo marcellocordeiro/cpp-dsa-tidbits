@@ -19,6 +19,6 @@ struct pair {
 };
 
 template <typename T1, typename T2>
-pair<T1, T2> make_pair(T1 first, T2 second) {
+auto make_pair(T1 first, T2 second) -> pair<T1, T2> {
   return pair<T1, T2>(first, second);
 }

@@ -16,8 +16,11 @@ enable_testing()
 add_subdirectory(executable)
 add_subdirectory(library)
 
-file(WRITE ${CMAKE_SOURCE_DIR}/.clangd
+# Workaround to make clangd find `compile_commands.json`
+if(CLANGD_CONFIG_WORKAROUND)
+  file(WRITE ${CMAKE_SOURCE_DIR}/.clangd
 "CompileFlags:
   CompilationDatabase: ${CMAKE_BINARY_DIR}
 "
-)
+  )
+endif()

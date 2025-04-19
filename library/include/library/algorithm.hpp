@@ -1,7 +1,7 @@
 #pragma once
 
 template <typename T>
-void swap(T& x, T& y) {
+void swap(T& x, T& y) noexcept {
   T temp = x;
   x = y;
   y = temp;

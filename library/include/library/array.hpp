@@ -20,27 +20,27 @@ public:
   using iterator_tag = std::random_access_iterator_tag;
   using difference_type = std::ptrdiff_t;
 
-  iterator begin() {
+  auto begin() -> iterator {
     return arr;
   }
 
-  iterator end() {
+  auto end() -> iterator {
     return arr + _size;
   }
 
-  const_iterator begin() const {
+  auto begin() const -> const_iterator {
     return arr;
   }
 
-  const_iterator end() const {
+  auto end() const -> const_iterator {
     return arr + _size;
   }
 
-  bool empty() {
+  auto empty() -> bool {
     return _size == 0;
   }
 
-  constexpr size_type size() {
+  constexpr auto size() -> size_type {
     return _size;
   }
 

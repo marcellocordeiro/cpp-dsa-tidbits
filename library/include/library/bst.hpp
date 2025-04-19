@@ -16,11 +16,11 @@ public:
     cout << "\n";
   }*/
 
-  T height() const {
+  auto height() const -> T {
     return height(this->root);
   }
 
-  bool search(const T value) const {
+  auto search(const T value) const -> bool {
     return search(this->root, value);
   }
 
@@ -33,7 +33,7 @@ public:
   }
 
 private:
-  node* insert(node* root, const T value) {
+  auto insert(node* root, const T value) -> node* {
     if (root == nullptr) {
       return new node(value);
     }
@@ -58,7 +58,7 @@ private:
     return;
   }*/
 
-  T height(const node* root) const {
+  auto height(const node* root) const -> T {
     if (root == nullptr) {
       return 0;
     }
@@ -69,7 +69,7 @@ private:
     return (l > r) ? (l + 1) : (r + 1);
   }
 
-  bool search(const node* root, const T value) const {
+  auto search(const node* root, const T value) const -> bool {
     if (root == nullptr) {
       return false;
     }
@@ -84,7 +84,7 @@ private:
     return true;
   }
 
-  node* find_min(const node* root) const {
+  auto find_min(const node* root) const -> node* {
     if (root->left == nullptr) {
       return root;
     }
@@ -92,7 +92,7 @@ private:
     return find_min(root->left);
   }
 
-  node* remove(node* root, const T value) {
+  auto remove(node* root, const T value) -> node* {
     if (root == nullptr) {
       return nullptr;
     }

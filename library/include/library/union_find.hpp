@@ -2,7 +2,7 @@
 
 class union_find {
 public:
-  union_find(int size) : node(new int[size]), height(new int[size]) { // make_set
+  explicit union_find(int size) : node(new int[size]), height(new int[size]) { // make_set
     for (int i = 0; i < size; i++) {
       node[i] = i;
     }
@@ -35,7 +35,7 @@ public:
     }
   }
 
-  int find(int p) {
+  auto find(int p) -> int {
     if (node[p] != p) {
       node[p] = find(node[p]);
     }

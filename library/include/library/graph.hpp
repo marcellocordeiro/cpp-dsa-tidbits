@@ -19,7 +19,8 @@ public:
     delete[] G;
   }
 
-  int size() {
+  [[nodiscard]]
+  auto size() const -> int {
     return _size;
   }
 
@@ -28,7 +29,7 @@ public:
     G[edge.second].push_back({edge.first, weight});
   }
 
-  vector<pair<int, int>>& operator[](int i) {
+  auto operator[](int i) -> vector<pair<int, int>>& {
     return G[i];
   }
 
@@ -36,7 +37,7 @@ public:
     vector<bool> P(_size, false);
 
     for (int s = 0; s < _size; ++s) {
-      if (P[s] == false) {
+      if (!P[s]) {
         dfs_visit(s, P);
       }
     }
@@ -56,7 +57,7 @@ public:
     for (const auto& it : G[s]) {
       int v = it.first;
 
-      if (P[v] == false) {
+      if (!P[v]) {
         dfs_visit(v, P);
       }
     }
@@ -68,7 +69,7 @@ public:
     vector<bool> P(_size, false);
 
     for (int s = 0; s < _size; ++s) {
-      if (P[s] == false) {
+      if (!P[s]) {
         bfs_visit(s, P);
       }
     }
@@ -96,7 +97,7 @@ public:
       for (const auto& it : G[u]) {
         int v = it.first;
 
-        if (P[v] == false) {
+        if (!P[v]) {
           P[v] = true;
           q.push(v);
         }
@@ -106,9 +107,10 @@ public:
     }
   }
 
-  pair<vector<int>, vector<int>> shortest_path(int s) {
+  auto shortest_path(int s) -> pair<vector<int>, vector<int>> {
     // D = shortest distance from A to B, F = path
-    vector<int> D(_size, INF), F(_size, -1);
+    vector<int> D(_size, INF);
+    vector<int> F(_size, -1);
 
     D[s] = 0;
 
@@ -134,9 +136,10 @@ public:
     return {D, F};
   }
 
-  pair<vector<int>, vector<int>> dijkstra(int s) {
+  auto dijkstra(int s) -> pair<vector<int>, vector<int>> {
     // D = shortest distance from A to B, F = path
-    vector<int> D(_size, INF), F(_size, -1);
+    vector<int> D(_size, INF);
+    vector<int> F(_size, -1);
     priority_queue<pair<int, int>, greater<pair<int, int>>> pq;
 
     D[s] = 0;
@@ -164,8 +167,9 @@ public:
     return {D, F};
   }
 
-  pair<vector<int>, vector<int>> prim(int s) {
-    vector<int> W(_size, INF), F(_size, -1);
+  auto prim(int s) -> pair<vector<int>, vector<int>> {
+    vector<int> W(_size, INF);
+    vector<int> F(_size, -1);
     vector<bool> S(_size, false);
 
     W[s] = 0;
@@ -183,7 +187,7 @@ public:
         int v = it.first;
         int w = it.second;
 
-        if (S[v] == false && W[v] > w) {
+        if (!S[v] && W[v] > w) {
           W[v] = w;
           pq.push({W[v], v});
 

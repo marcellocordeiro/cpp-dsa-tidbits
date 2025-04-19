@@ -10,15 +10,16 @@ public:
   using const_reference = typename list<T>::const_reference;
   using size_type = typename list<T>::size_type;
 
-  bool empty() const {
+  [[nodiscard]]
+  auto empty() const -> bool {
     return list<T>::empty();
   }
 
-  size_type size() const {
+  auto size() const -> size_type {
     return list<T>::size();
   }
 
-  reference top() const {
+  auto top() const -> reference {
     return list<T>::front();
   }
 

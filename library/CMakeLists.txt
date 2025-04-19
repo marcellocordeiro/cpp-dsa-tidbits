@@ -1,5 +1,16 @@
+file(
+  GLOB
+  SOURCES
+  CONFIGURE_DEPENDS
+  "include/library/*.hpp"
+)
+
 add_library(library INTERFACE)
-target_include_directories(library INTERFACE "include")
+target_sources(library PUBLIC
+  FILE_SET HEADERS
+  BASE_DIRS "include"
+  FILES ${SOURCES}
+)
 target_link_libraries(library INTERFACE project-warnings)
 
 set_target_properties(

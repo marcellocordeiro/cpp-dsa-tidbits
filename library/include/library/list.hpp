@@ -32,27 +32,29 @@ public:
   class iterator;
   class const_iterator;
 
-  iterator begin() {
+  auto begin() -> iterator {
     return iterator(head->next);
   }
 
-  iterator end() {
+  auto end() -> iterator {
     return iterator(nullptr);
   }
 
-  const_iterator begin() const {
+  auto begin() const -> const_iterator {
     return const_iterator(head->next);
   }
 
-  const_iterator end() const {
+  auto end() const -> const_iterator {
     return const_iterator(nullptr);
   }
 
-  bool empty() const {
+  [[nodiscard]]
+  auto empty() const -> bool {
     return (_size == 0);
   }
 
-  size_type size() const {
+  [[nodiscard]]
+  auto size() const -> size_type {
     return _size;
   }
 
@@ -112,7 +114,7 @@ public:
     _size = l_size;
   }
 
-  list<value_type>& operator=(list<value_type>& rhs) {
+  auto operator=(list<value_type>& rhs) -> list<value_type>& {
     list<value_type> temp(rhs);
 
     swap(temp);
@@ -184,12 +186,12 @@ public:
 
   explicit iterator(pointer ptr) : ptr(ptr) {}
 
-  pointer operator=(const_pointer rhs) {
+  auto operator=(const_pointer rhs) -> pointer {
     ptr = rhs;
     return ptr;
   }
 
-  bool operator==(const iterator& rhs) const {
+  auto operator==(const iterator& rhs) const -> bool {
     return (ptr == rhs.ptr);
   }
 
@@ -236,33 +238,33 @@ public:
 
   explicit const_iterator(pointer ptr) : ptr(ptr) {}
 
-  pointer operator=(const_pointer rhs) {
+  auto operator=(const_pointer rhs) -> pointer {
     ptr = rhs;
     return ptr;
   }
 
-  bool operator==(const const_iterator& rhs) const {
+  auto operator==(const const_iterator& rhs) const -> bool {
     return (ptr == rhs.ptr);
   }
 
-  bool operator!=(const const_iterator& rhs) const {
+  auto operator!=(const const_iterator& rhs) const -> bool {
     return !(*this == rhs);
   }
 
-  const_pointer operator->() const {
+  auto operator->() const -> const_pointer {
     return ptr;
   }
 
-  const_reference operator*() const {
+  auto operator*() const -> const_reference {
     return ptr->data;
   }
 
-  const_iterator& operator++(int) {
+  auto operator++(int) -> const_iterator& {
     ptr = ptr->next;
     return *this;
   }
 
-  const_iterator& operator++() {
+  auto operator++() -> const_iterator& {
     ptr = ptr->next;
     return *this;
   }

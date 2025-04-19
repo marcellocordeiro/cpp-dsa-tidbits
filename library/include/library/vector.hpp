@@ -114,7 +114,7 @@ public:
       return;
     }
 
-    pointer temp = new value_type[_capacity];
+    auto temp = new value_type[_capacity];
 
     for (size_type i = 0; i < _size; ++i) {
       temp[i] = ptr[i];
@@ -157,15 +157,15 @@ public:
     ptr = new value_type[_capacity];
   }
 
-  reference operator[](const size_type i) {
+  auto operator[](const size_type i) -> reference {
     return ptr[i];
   }
 
-  reference operator[](const size_type i) const {
+  auto operator[](const size_type i) const -> reference {
     return ptr[i];
   }
 
-  vector<T>& operator=(const vector<T>& rhs) {
+  auto operator=(const vector<T>& rhs) -> vector<T>& {
     vector<T> temp(rhs);
 
     swap(temp);

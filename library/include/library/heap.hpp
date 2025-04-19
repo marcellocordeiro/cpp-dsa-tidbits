@@ -19,15 +19,17 @@ public:
     }
   }
 
-  bool empty() const {
+  [[nodiscard]]
+  auto empty() const -> bool {
     return H.empty();
   }
 
-  size_type size() const {
+  [[nodiscard]]
+  auto size() const -> size_type {
     return H.size();
   }
 
-  T top() const {
+  auto top() const -> T {
     return H[0];
   }
 
@@ -45,15 +47,18 @@ public:
   }
 
 private:
-  size_type parent(const size_type i) const {
+  [[nodiscard]]
+  auto parent(const size_type i) const -> size_type {
     return (i - 1) / 2;
   }
 
-  size_type left(const size_type i) const {
+  [[nodiscard]]
+  auto left(const size_type i) const -> size_type {
     return (2 * i) + 1;
   }
 
-  size_type right(const size_type i) const {
+  [[nodiscard]]
+  auto right(const size_type i) const -> size_type {
     return (2 * i) + 2;
   }
 
