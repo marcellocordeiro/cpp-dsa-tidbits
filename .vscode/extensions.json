@@ -4,6 +4,6 @@
         "ms-vscode.cmake-tools",
         "ms-vscode-remote.remote-containers",
         "ms-azuretools.vscode-docker",
-        "editorconfig.editorconfig"
-    ]
+        "editorconfig.editorconfig",
+    ],
 }

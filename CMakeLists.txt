@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.30.5)
 project(cpp-dsa-tidbits)
 
 include("cmake/CompilerWarnings.cmake")
-include("cmake/CPM.cmake")
+include("cmake/get_cpm.cmake")
 include("cmake/StandardProjectSettings.cmake")
 
 add_library(project-warnings INTERFACE)
