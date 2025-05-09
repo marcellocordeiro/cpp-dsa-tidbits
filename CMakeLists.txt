@@ -1,26 +1,15 @@
-cmake_minimum_required(VERSION 3.30.5)
+cmake_minimum_required(VERSION 3.30.5...4.0.2)
 
 project(cpp-dsa-tidbits)
 
 include("cmake/CompilerWarnings.cmake")
-include("cmake/get_cpm.cmake")
+include("cmake/Dependencies.cmake")
 include("cmake/StandardProjectSettings.cmake")
 
 add_library(project-warnings INTERFACE)
 set_project_warnings(project-warnings)
 
-CPMAddPackage("gh:catchorg/Catch2#v3.8.1")
-
 enable_testing()
 
 add_subdirectory(executable)
 add_subdirectory(library)
-
-# Workaround to make clangd find `compile_commands.json`
-if(CLANGD_CONFIG_WORKAROUND)
-  file(WRITE ${CMAKE_SOURCE_DIR}/.clangd
-"CompileFlags:
-  CompilationDatabase: ${CMAKE_BINARY_DIR}
-"
-  )
-endif()
