@@ -1,6 +1,6 @@
 #include <catch2/catch_test_macros.hpp>
 
-#include <library/list.hpp>
+#include "library/list.hpp"
 
 TEST_CASE("list tests", "[list.hpp]") {
   list<int> l;

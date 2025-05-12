@@ -4,7 +4,7 @@
 #include <catch2/catch_template_test_macros.hpp>
 #include <catch2/catch_test_macros.hpp>
 
-#include <library/vector.hpp>
+#include "library/vector.hpp"
 
 TEMPLATE_TEST_CASE("API matches", "[api][template]", (vector<int>), (std::vector<int>)) {
   TestType v;

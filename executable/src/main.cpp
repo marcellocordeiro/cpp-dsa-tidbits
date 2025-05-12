@@ -2,7 +2,7 @@
 #include <string_view>
 #include <vector>
 
-#include "tests-todo.hpp"
+// #include "tests-todo.hpp"
 
 #if defined(__clang__)
 // clang
@@ -12,14 +12,14 @@
 // MSVC
 #endif
 
-void withSpan(std::span<std::string_view> args) {
+void with_span(std::span<std::string_view> args) {
   (void)args;
 }
 
 auto main(int argc, char* argv[]) -> int {
   auto args = std::vector<std::string_view>(argv, argv + argc);
 
-  withSpan(args);
+  with_span(args);
 
   return 0;
 }

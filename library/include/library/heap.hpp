@@ -6,7 +6,7 @@
 
 template <typename T, class Compare = less<T>>
 class priority_queue {
-  using size_type = unsigned int;
+  using size_type = std::size_t;
 
 public:
   priority_queue() = default;

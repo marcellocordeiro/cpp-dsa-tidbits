@@ -3,7 +3,7 @@
 # https://github.com/lefticus/cppbestpractices/blob/master/02-Use_the_Tools_Available.md
 
 function(set_project_warnings project_name)
-  option(WARNINGS_AS_ERRORS "Treat compiler warnings as errors" TRUE)
+  option(WARNINGS_AS_ERRORS "Treat compiler warnings as errors" ON)
 
   set(MSVC_WARNINGS
     /W4 # Baseline reasonable warnings
@@ -76,3 +76,7 @@ function(set_project_warnings project_name)
 
   target_compile_options(${project_name} INTERFACE ${PROJECT_WARNINGS})
 endfunction()
+
+add_library(project-warnings INTERFACE)
+add_library(global::warnings ALIAS project-warnings)
+set_project_warnings(project-warnings)

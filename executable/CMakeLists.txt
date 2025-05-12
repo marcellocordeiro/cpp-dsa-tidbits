@@ -1,18 +1,18 @@
-# Executable
+add_executable(executable)
 
-file(
-  GLOB
-  SOURCES
-  CONFIGURE_DEPENDS
-  "src/main.cpp"
-  "src/dummies/*.cpp"
+target_sources(executable
+  PRIVATE
+  src/main.cpp
+  src/tests-todo.hpp
 )
 
-add_executable(executable ${SOURCES})
-target_link_libraries(executable PRIVATE library)
+target_link_libraries(executable
+  PRIVATE
+    global::warnings
+    library
+)
 
-set_target_properties(
-  executable
+set_target_properties(executable
   PROPERTIES
     CXX_STANDARD 23
     CXX_STANDARD_REQUIRED YES

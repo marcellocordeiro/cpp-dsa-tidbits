@@ -1,6 +1,6 @@
 #include <catch2/catch_test_macros.hpp>
 
-#include <library/stack.hpp>
+#include "library/stack.hpp"
 
 TEST_CASE("stack tests", "[stack.hpp]") {
   stack<int> s;
